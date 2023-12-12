@@ -67,9 +67,9 @@ export default function SideNavOuterToolbar({ title, children }) {
       <Drawer
         className={["drawer", patchCssClass].join(" ")}
         position={"before"}
-        // closeOnOutsideClick={onOutsideClick}
-        closeOnOutsideClick={false}
-        openedStateMode={isLarge ? "shrink" : "overlap"}
+        closeOnOutsideClick={onOutsideClick}
+        // closeOnOutsideClick={false}
+        openedStateMode={isLarge ? "shrink" : "shrink"}
         revealMode={isXSmall ? "slide" : "expand"}
         minSize={isXSmall ? 0 : 60}
         maxSize={250}

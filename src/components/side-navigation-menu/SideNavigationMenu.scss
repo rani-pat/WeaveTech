@@ -22,6 +22,7 @@
       .dx-treeview-item {
         padding-left: 0;
         padding-right: 0;
+        margin-top: 15px;
 
         .dx-icon {
           width: $side-panel-min-width !important;
@@ -29,7 +30,7 @@
         }
       }
       // ##
-      
+
       // ## Arrow customization
       .dx-treeview-node {
         padding: 0 0 !important;
@@ -48,12 +49,12 @@
 
       // ## Item levels customization
       .dx-treeview-node {
-        &[aria-level='1'] {
+        &[aria-level="1"] {
           font-weight: bold;
-          border-bottom: 1px solid $base-border-color;
+          // border-bottom: 1px solid $base-border-color;
         }
-  
-        &[aria-level='2'] .dx-treeview-item-content {
+
+        &[aria-level="2"] .dx-treeview-item-content {
           font-weight: normal;
           padding: 0 $side-panel-min-width;
         }
@@ -65,7 +66,7 @@
     .dx-treeview {
       .dx-treeview-node-container {
         .dx-treeview-node {
-          &.dx-state-selected:not(.dx-state-focused)> .dx-treeview-item {
+          &.dx-state-selected:not(.dx-state-focused) > .dx-treeview-item {
             // background: transparent;
             background: #fff;
           }
@@ -75,15 +76,18 @@
             color: #161616;
           }
 
-          &:not(.dx-state-focused)>.dx-treeview-item.dx-state-hover {
-            background-color: lighten($base-bg, 4.00);
+          &:not(.dx-state-focused) > .dx-treeview-item.dx-state-hover {
+            background-color: lighten($base-bg, 4);
           }
         }
       }
     }
 
     .dx-theme-generic .dx-treeview {
-      .dx-treeview-node-container .dx-treeview-node.dx-state-selected.dx-state-focused > .dx-treeview-item * {
+      .dx-treeview-node-container
+        .dx-treeview-node.dx-state-selected.dx-state-focused
+        > .dx-treeview-item
+        * {
         color: inherit;
       }
     }
@@ -94,4 +98,22 @@
 .dx-drawer-overlap.pre-init-blink-fix {
   @import "../../utils/patches.scss";
   @include menu-pre-init-patch;
+}
+
+.search-box {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid #fff;
+}
+
+.search-box {
+  .dx-icon.dx-icon-search {
+    position: absolute;
+    margin-left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    z-index: 1;
+  }
 }

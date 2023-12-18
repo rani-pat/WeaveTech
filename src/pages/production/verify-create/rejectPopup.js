@@ -5,6 +5,7 @@ import {
   PopupHeaderText,
   PopupSubText,
 } from "../../../components/typographyText/TypograghyText";
+import { rejectPopupIcon } from "../../../assets";
 
 const RejectionPopup = ({ isVisible, onHide }) => {
   return (
@@ -18,8 +19,8 @@ const RejectionPopup = ({ isVisible, onHide }) => {
       showTitle={false}
     >
       <div className="release-popup-main">
-        <div className="popup-back-btn">
-          <Button icon="back" />
+        <div style={{ backgroundColor: "rgba(218, 30, 40, 0.06)" }}>
+          <img src={rejectPopupIcon} style={{ padding: "5px" }} />
         </div>
         <div className="popup-close-btn">
           <Button icon="close" onClick={onHide} />
@@ -30,7 +31,7 @@ const RejectionPopup = ({ isVisible, onHide }) => {
           display: "flex",
           flexDirection: "column",
           gap: "5px",
-          marginTop: "20px",
+          marginTop: "15px",
         }}
       >
         <PopupHeaderText text={"Rejection"} />

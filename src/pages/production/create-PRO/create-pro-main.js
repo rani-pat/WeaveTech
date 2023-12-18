@@ -4,7 +4,7 @@ import {
   SubText,
 } from "../../../components/typographyText/TypograghyText";
 import "./create_pro.scss";
-import { Button as NormalButton, Button } from "devextreme-react";
+import { Button as NormalButton, Button, Popup } from "devextreme-react";
 import Card from "../../../components/card/card";
 import { SVG1, SVG2, SVG3, SVG4 } from "../../../assets";
 import { useNavigate } from "react-router-dom";
@@ -51,31 +51,52 @@ const CreatePRO = () => {
 
   const [filterStatus, setFilterStatus] = useState("All");
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const navigate = useNavigate();
+  const [selectedRowCount, setSelectedRowCount] = useState(0);
+  const [clickedRowKey, setClickedRowKey] = useState(null);
 
-  const handleInitiateClick = () => {
-    navigate("/create-pro/initiate-pro");
+  const onRowClick = (e) => {
+    const clickedKey = e.data ? e.data.Task_ID : null;
+    setClickedRowKey(clickedKey);
   };
 
-  const handleFilterChange = (value) => {
-    setFilterStatus(value);
-
-    // Apply filtering to the DataGrid based on the selected status
-    if (value === "All") {
-      // Clear the filter
-      dataGrid.instance.clearFilter();
-    } else {
-      // Apply the filter
-      dataGrid.instance.filter(["Task_Status", "=", value]);
+  const handlePopupIconClick = () => {
+    const selectedRows = dataGrid.instance.getSelectedRowsData();
+    if (selectedRows.length === 1) {
+      const selectedRow = selectedRows[0];
+      if (selectedRow.Task_Status === "Completed") {
+        navigate("/create-pro/Initiate-pro");
+      } else if (selectedRow.Task_ID === 4) {
+        console.log("pending");
+        navigate("/create-pro/Initiate-pro");
+      }
     }
   };
 
+  const navigate = useNavigate();
+  const handleInitiateClick = () => {
+    navigate("/create-pro/Initiate-pro");
+  };
   const onSelectionChanged = ({ selectedRowKeys, selectedRowsData }) => {
     console.log("onSelectionChanged", selectedRowsData);
     setSelectedRowKeys(selectedRowKeys);
+    setSelectedRowCount(selectedRowKeys.length);
   };
 
   let dataGrid;
+  let selectBoxMonth;
+  let selectBoxCreatedPro;
+  const monthItem = [
+    { value: "All", text: "Yesterday" },
+    { value: "Today's", text: "Today's" },
+    { value: "Last Week", text: "Last Week" },
+    { value: "This Month", text: "This Month" },
+  ];
+  const allCreatedpro = [
+    { value: "All", text: "All Created Production" },
+    { value: "Pending Production", text: "Pending Production" },
+    { value: "Approve Production", text: "Approve Production" },
+    { value: "Reject Production", text: "Reject Production" },
+  ];
 
   return (
     <>
@@ -121,12 +142,22 @@ const CreatePRO = () => {
             }}
             selectedRowKeys={selectedRowKeys}
             onSelectionChanged={onSelectionChanged}
+            onSelectedRowKeysChange={onRowClick}
           >
             <Paging defaultPageSize={10} />
 
             <SearchPanel visible={!selectedRowKeys.length} width={300} />
             <ColumnChooser enabled={!selectedRowKeys.length} />
-
+            <Column
+              width={50}
+              cellRender={(data) => (
+                <div className="custom-cell">
+                  {selectedRowKeys.includes(data.data.Task_ID) && (
+                    <Button icon="background" onClick={handlePopupIconClick} />
+                  )}
+                </div>
+              )}
+            />
             <Column
               dataField={"Task_Subject"}
               width={190}
@@ -159,25 +190,35 @@ const CreatePRO = () => {
             <Toolbar className="Toolbar-Item">
               <Item location="before">
                 <div className="informer">
-                  <SubText text={"All PRO’s"} />
+                  <SubText
+                    text={`All PRO’s (${selectedRowCount} item selected)`}
+                  />
                 </div>
               </Item>
               <Item name="searchPanel" />
 
               <Item location="after">
                 <SelectBox
+                  ref={(ref) => (selectBoxMonth = ref)}
                   value={filterStatus}
-                  onValueChanged={handleFilterChange}
                   width={200}
                   visible={!selectedRowKeys.length}
+                  className="selectbox-left"
+                  items={monthItem}
+                  valueExpr="value"
+                  displayExpr="text"
                 />
               </Item>
               <Item location="after">
                 <SelectBox
+                  ref={(ref) => (selectBoxCreatedPro = ref)}
                   value={filterStatus}
-                  onValueChanged={handleFilterChange}
                   width={200}
                   visible={!selectedRowKeys.length}
+                  className="selectbox-right"
+                  items={allCreatedpro}
+                  valueExpr="value"
+                  displayExpr="text"
                 />
               </Item>
               <Item name="columnChooserButton" />
@@ -187,12 +228,12 @@ const CreatePRO = () => {
                   text="Cancel"
                   type="normal"
                   stylingMode="text"
-                  visible={selectedRowKeys.length > 0}
+                  visible={selectedRowKeys.length >= 2}
                 />
               </Item>
               <Item location="after">
                 <Button
-                  visible={selectedRowKeys.length > 0}
+                  visible={selectedRowKeys.length >= 2}
                   text="Release"
                   type="default"
                   stylingMode="text"

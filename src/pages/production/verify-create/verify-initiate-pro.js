@@ -65,6 +65,7 @@ const VerifyInitiatePRO = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [popupType, setPopupType] = useState("");
+  const [filterStatus, setFilterStatus] = useState("All");
 
   const handleToggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -82,7 +83,24 @@ const VerifyInitiatePRO = () => {
   const handleClosePopup = () => {
     setIsPopupVisible(false);
   };
+  let selectBoxType;
+  let selectBoxStatus;
+  let selectBoxSeries;
+  let selectBoxShift;
 
+  const Type = [
+    { value: "Standard", text: "Standard" },
+    { value: "Today's", text: "Special" },
+  ];
+  const Status = [{ value: "Planned", text: "Planned" }];
+  const Series = [
+    { value: "rt3445", text: "rt3445" },
+    { value: "rt4556", text: "rt4556" },
+  ];
+  const Shift = [
+    { value: "DayShift", text: "Day Shift" },
+    { value: "NightShift", text: "Night Shift" },
+  ];
   return (
     <>
       <Breadcrumbs navigation={navigation} routes={routes} />
@@ -118,16 +136,24 @@ const VerifyInitiatePRO = () => {
       <div className="content-block dx-card responsive-paddings">
         <div className="initiate-inputs">
           <SelectBox
-            id="type"
+            ref={(ref) => (selectBoxType = ref)}
+            value={filterStatus}
             label="Type"
             height={56}
             showClearButton={true}
+            items={Type}
+            valueExpr="value"
+            displayExpr="text"
           />
           <SelectBox
-            id="status"
+            ref={(ref) => (selectBoxStatus = ref)}
+            value={filterStatus}
             label="Status"
             height={56}
             showClearButton={true}
+            items={Status}
+            valueExpr="value"
+            displayExpr="text"
           />
           <TextBox
             // value={filterStatus}
@@ -146,15 +172,14 @@ const VerifyInitiatePRO = () => {
             />
           </TextBox>
           <TextBox
-            id="product-description"
             label="Product Description"
             placeholder="Product Description"
             height={56}
             showClearButton={true}
           />
-          <SelectBox
-            id="shift"
-            label="Shift"
+          <TextBox
+            label="Planned Qty"
+            placeholder="Planned Qty"
             height={56}
             showClearButton={true}
           />
@@ -178,19 +203,73 @@ const VerifyInitiatePRO = () => {
         {isExpanded && (
           <>
             <div className="additional-information">
-              <SelectBox
-                id="planed-qty"
-                label="Planned Qty"
+              <TextBox
+                label="UOM"
+                placeholder="UOM"
                 height={56}
                 showClearButton={true}
               />
-              <SelectBox
-                id="umo"
-                label="UOM"
+              <DateBox
+                label="Start Date"
                 height={56}
+                displayFormat="yyyy-MM-dd"
+                // placeholder="Start Date"
+                stylingMode="outlined"
+                showClearButton={true}
+              />
+              <DateBox
+                label="Due Date"
+                height={56}
+                displayFormat="yyyy-MM-dd"
+                // placeholder="Due Date"
+                stylingMode="outlined"
+                showClearButton={true}
+              />
+              <DateBox
+                label="Order Date"
+                height={56}
+                displayFormat="yyyy-MM-dd"
+                // placeholder="Order Date"
+                stylingMode="outlined"
                 showClearButton={true}
               />
 
+              <SelectBox
+                ref={(ref) => (selectBoxSeries = ref)}
+                value={filterStatus}
+                label="Series"
+                placeholder="Input"
+                height={56}
+                showClearButton={true}
+                items={Series}
+                valueExpr="value"
+                displayExpr="text"
+              />
+              <TextBox
+                label="Doc Number"
+                placeholder="Input"
+                height={56}
+                showClearButton={true}
+              />
+            </div>
+
+            <div className="additional-information">
+              <TextBox
+                // value={filterStatus}
+                // onValueChanged={handleFilterChange}
+                label="Distribution Rule"
+                placeholder="Input"
+                height={56}
+              >
+                <TextBoxButton
+                  name="popupSearch"
+                  location="after"
+                  options={NewItemsOptions}
+                  height={44}
+                  width={44}
+                  className="popup-icon"
+                />
+              </TextBox>
               <TextBox
                 // value={filterStatus}
                 // onValueChanged={handleFilterChange}
@@ -208,56 +287,6 @@ const VerifyInitiatePRO = () => {
                 />
               </TextBox>
               <TextBox
-                id="series"
-                label="Series"
-                placeholder="Input"
-                height={56}
-                showClearButton={true}
-              />
-              <SelectBox
-                id="doc-number"
-                label="Doc Number"
-                height={56}
-                showClearButton={true}
-              />
-              <TextBox
-                // value={filterStatus}
-                // onValueChanged={handleFilterChange}
-                label="Distribution Rule"
-                placeholder="Input"
-                height={56}
-              >
-                <TextBoxButton
-                  name="popupSearch"
-                  location="after"
-                  options={NewItemsOptions}
-                  height={44}
-                  width={44}
-                  className="popup-icon"
-                />
-              </TextBox>
-            </div>
-
-            <div className="additional-information">
-              <DateBox
-                id="start-date"
-                label="Start Date"
-                height={56}
-                displayFormat="yyyy-MM-dd"
-                // placeholder="Start Date"
-                stylingMode="outlined"
-                showClearButton={true}
-              />
-              <DateBox
-                id="due-date"
-                label="Due Date"
-                height={56}
-                displayFormat="yyyy-MM-dd"
-                // placeholder="Due Date"
-                stylingMode="outlined"
-                showClearButton={true}
-              />
-              <TextBox
                 // value={filterStatus}
                 // onValueChanged={handleFilterChange}
                 label="Project"
@@ -273,25 +302,10 @@ const VerifyInitiatePRO = () => {
                   className="popup-icon"
                 />
               </TextBox>
-              <DateBox
-                id="order-date"
-                label="Order Date"
-                height={56}
-                displayFormat="yyyy-MM-dd"
-                // placeholder="Order Date"
-                stylingMode="outlined"
-                showClearButton={true}
-              />
-              <SelectBox
-                id="linked-to"
-                label="Linked To"
-                height={56}
-                showClearButton={true}
-              />
               <TextBox
                 // value={filterStatus}
                 // onValueChanged={handleFilterChange}
-                label="Linked Order"
+                label="Customer"
                 placeholder="Input"
                 height={56}
               >
@@ -304,6 +318,23 @@ const VerifyInitiatePRO = () => {
                   className="popup-icon"
                 />
               </TextBox>
+
+              <SelectBox
+                label="Shift"
+                ref={(ref) => (selectBoxShift = ref)}
+                value={filterStatus}
+                height={56}
+                showClearButton={true}
+                items={Shift}
+                valueExpr="value"
+                displayExpr="text"
+              />
+              <TextBox
+                label="Actual Weight"
+                placeholder="Actual Weight"
+                height={56}
+                showClearButton={true}
+              />
             </div>
           </>
         )}

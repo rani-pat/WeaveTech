@@ -21,7 +21,7 @@ const routes = [
     element: CreatePRO,
   },
   {
-    path: "/create-pro/initiate-pro",
+    path: "/create-pro/Initiate-pro",
     element: IntiatePRO,
   },
   {
@@ -29,7 +29,7 @@ const routes = [
     element: VerifyPRO,
   },
   {
-    path: "/verify-pro-listing/verify-initiate-pro",
+    path: "/verify-pro-listing/Verify-initiate-pro",
     element: VerifyInitiatePRO,
   },
   {
@@ -37,7 +37,7 @@ const routes = [
     element: IssuePROMain,
   },
   {
-    path: "/issue-pro/generate-issue",
+    path: "/issue-pro/Generate-issue",
     element: GenerateIssue,
   },
 ];

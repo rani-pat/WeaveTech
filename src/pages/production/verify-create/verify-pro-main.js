@@ -8,7 +8,7 @@ import {
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import { navigation } from "../../../app-navigation";
 import Card from "../../../components/card/card";
-import { SVG1, SVG2, SVG3, SVG4 } from "../../../assets";
+import { SVG1, SVG2, SVG3, SVG4, folderIcon } from "../../../assets";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../app-routes";
 import DataGrid, {
@@ -20,9 +20,15 @@ import DataGrid, {
   Toolbar,
   Item,
   Selection,
+  Scrolling,
+  Button as dataGridButton,
+  Editing,
 } from "devextreme-react/data-grid";
 import { SelectBox, Button, TextBox } from "devextreme-react";
+import { Template } from "devextreme-react/core/template";
 import { Popup, Position, ToolbarItem } from "devextreme-react/popup";
+import { faL } from "@fortawesome/free-solid-svg-icons";
+import "./verify_pro.scss";
 
 const VerifyPRO = () => {
   const dataSource = {
@@ -52,36 +58,24 @@ const VerifyPRO = () => {
   ];
   const [filterStatus, setFilterStatus] = useState("All");
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [finalSelected, setFinalSelected] = useState();
   const navigate = useNavigate();
   const dataGridRef = useRef();
-  const handleFilterChange = (value) => {
-    setFilterStatus(value);
-
-    // Apply filtering to the DataGrid based on the selected status
-    if (value === "All") {
-      // Clear the filter
-      dataGrid.instance.clearFilter();
-    } else {
-      // Apply the filter
-      dataGrid.instance.filter(["Task_Status", "=", value]);
-    }
-  };
 
   const handleInitiateClick = () => {
-    navigate("/verify-pro-listing/verify-initiate-pro");
+    navigate("/verify-pro-listing/Verify-initiate-pro");
   };
   const handleOpenPopup = () => {
     setIsPopupVisible(true);
   };
   const handleClosePopup = () => {
     setIsPopupVisible(false);
+    dataGridRef.current.instance.option("selectedRowKeys", []);
   };
+
   const handleSelectionChanged = (e) => {
     const selectedKeys = e.selectedRowKeys;
 
-    // Allow only single selection
     if (selectedKeys.length > 1) {
       const value = dataGridRef.current.instance.selectRows(
         selectedKeys[selectedKeys.length - 1]
@@ -95,9 +89,20 @@ const VerifyPRO = () => {
     handleOpenPopup();
   };
 
-  useEffect(() => {
-    // Load data or any other initialization logic here
-  }, []);
+  let selectBoxMonth;
+  let selectBoxCreatedPro;
+  const monthItem = [
+    { value: "All", text: "Yesterday" },
+    { value: "Today's", text: "Today's" },
+    { value: "Last Week", text: "Last Week" },
+    { value: "This Month", text: "This Month" },
+  ];
+  const allCreatedpro = [
+    { value: "All", text: "All Created Production" },
+    { value: "Pending Production", text: "Pending Production" },
+    { value: "Approve Production", text: "Approve Production" },
+    { value: "Reject Production", text: "Reject Production" },
+  ];
 
   let dataGrid;
   return (
@@ -106,14 +111,14 @@ const VerifyPRO = () => {
         visible={isPopupVisible}
         onHiding={handleClosePopup}
         width={480}
-        height={325}
+        height={240}
         showCloseButton={false}
         dragEnabled={false}
         showTitle={false}
       >
         <div className="release-popup-main">
-          <div className="popup-back-btn">
-            <Button icon="back" />
+          <div style={{ backgroundColor: "#F0F7FF" }}>
+            <img src={folderIcon} style={{ padding: "7px" }} />
           </div>
           <div className="popup-close-btn">
             <Button icon="close" onClick={handleClosePopup} />
@@ -127,24 +132,15 @@ const VerifyPRO = () => {
             marginTop: "20px",
           }}
         >
-          <PopupHeaderText text={"Rejection"} />
-          <PopupSubText text={"Add input"} />
-        </div>
-
-        <div className="release-popup-text">
-          <TextBox
-            label="Remarks"
-            placeholder="Input"
-            height={56}
-            showClearButton={true}
-          />
+          <PopupHeaderText text={"Details of Production Order"} />
+          <PopupSubText text={"Do you want to see the details ?"} />
         </div>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             gap: "10px",
-            marginTop: "35px",
+            marginTop: "24px",
           }}
         >
           <Button
@@ -181,9 +177,8 @@ const VerifyPRO = () => {
         </div>
       </div>
       <div className="content-block dx-card">
-        <div className="data-grid-container data-grid">
+        <div className="data-grid-container data-grid verify-pro-datagrid">
           <DataGrid
-            className={"dx-card wide-card"}
             dataSource={dataSource}
             showBorders={false}
             columnAutoWidth={true}
@@ -235,16 +230,24 @@ const VerifyPRO = () => {
 
               <Item location="after">
                 <SelectBox
+                  ref={(ref) => (selectBoxMonth = ref)}
                   value={filterStatus}
-                  onValueChanged={handleFilterChange}
                   width={200}
+                  className="selectbox-left"
+                  items={monthItem}
+                  valueExpr="value"
+                  displayExpr="text"
                 />
               </Item>
               <Item location="after">
                 <SelectBox
+                  ref={(ref) => (selectBoxCreatedPro = ref)}
                   value={filterStatus}
-                  onValueChanged={handleFilterChange}
                   width={200}
+                  className="selectbox-right"
+                  items={allCreatedpro}
+                  valueExpr="value"
+                  displayExpr="text"
                 />
               </Item>
               <Item name="columnChooserButton" />

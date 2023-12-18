@@ -1,5 +1,5 @@
+import siteLogo from "./assets/css/SVGs/Logo.svg";
 const appInfo = {
-    title: 'Steelandtube'
+  title: siteLogo,
 };
 export default appInfo;
-

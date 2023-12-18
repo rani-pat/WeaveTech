@@ -15,15 +15,16 @@
     align-items: center;
   }
 }
-.Toolbar-Item {
-  display: flex;
-  justify-content: space-between;
-  margin-right: 10px;
-  gap: 10px;
-}
+// .Toolbar-Item {
+//   display: flex;
+//   justify-content: space-between;
+//   margin-right: 10px;
+//   gap: 10px;
+// }
 .informer {
   margin-left: 20px;
 }
+
 .initiate-inputs {
   display: flex;
   justify-content: space-between;
@@ -43,10 +44,12 @@
   align-items: center;
   gap: 16px;
   margin-top: 25px;
+  height: auto;
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
     align-items: center;
+    height: 44px;
   }
 }
 .additional-information > * {
@@ -68,4 +71,11 @@
 .popup {
   border: none;
   border-radius: 0;
+}
+.selectbox-right {
+  margin-right: 8px !important;
+}
+.selectbox-left {
+  margin-left: 8px !important;
+  margin-right: 8px !important;
 }

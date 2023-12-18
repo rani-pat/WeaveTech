@@ -5,6 +5,7 @@ import {
   PopupHeaderText,
   PopupSubText,
 } from "../../../components/typographyText/TypograghyText";
+import { approvePopupIcon } from "../../../assets";
 
 const ApprovalPopup = ({ isVisible, onHide }) => {
   return (
@@ -18,8 +19,8 @@ const ApprovalPopup = ({ isVisible, onHide }) => {
       showTitle={false}
     >
       <div className="release-popup-main">
-        <div className="popup-back-btn">
-          <Button icon="back" />
+        <div style={{ backgroundColor: "#F0F7FF" }}>
+          <img src={approvePopupIcon} style={{ padding: "5px" }} />
         </div>
         <div className="popup-close-btn">
           <Button icon="close" onClick={onHide} />
@@ -30,7 +31,7 @@ const ApprovalPopup = ({ isVisible, onHide }) => {
           display: "flex",
           flexDirection: "column",
           gap: "5px",
-          marginTop: "20px",
+          marginTop: "15px",
         }}
       >
         <PopupHeaderText text={"Approval"} />
@@ -48,7 +49,7 @@ const ApprovalPopup = ({ isVisible, onHide }) => {
       <div className="release-popup-text">
         <Button
           type="default"
-          text="Approved"
+          text="Approve"
           width={480}
           height={44}
           onClick={onHide}

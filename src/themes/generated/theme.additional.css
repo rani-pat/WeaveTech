@@ -1687,6 +1687,9 @@
 .dx-swatch-additional .dx-widget textarea {
   font-family: "Helvetica Neue", "Segoe UI", helvetica, verdana, sans-serif;
   line-height: 1.35715;
+  /* for searchbox */
+  margin-left: 30px;
+  color: #fff;
 }
 .dx-swatch-additional .dx-state-disabled .dx-widget,
 .dx-swatch-additional .dx-state-disabled.dx-widget {
@@ -3165,10 +3168,11 @@
   max-width: 100%;
   width: auto;
   height: 100%;
-  text-align: left;
+  /* text-align: left; */
   cursor: text;
   pointer-events: none;
-  color: #999;
+  color: #fff;
+  margin-left: 30px;
 }
 .dx-swatch-additional .dx-placeholder::before {
   display: inline-block;
@@ -3278,9 +3282,8 @@
   -webkit-user-modify: read-write-plaintext-only;
 }
 .dx-swatch-additional .dx-texteditor.dx-editor-outlined {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background: none !important;
+  border:none !important;
 }
 .dx-swatch-additional .dx-texteditor.dx-editor-underlined {
   background: 0 0;
@@ -7842,7 +7845,7 @@
   cursor: pointer;
   font: 22px/22px DXIcons;
   text-align: center;
-  color: #333;
+  color: #fff;
   width: 21px;
   height: 32px;
   top: 0;
@@ -7862,6 +7865,7 @@
   .dx-treeview-toggle-item-visibility.dx-treeview-toggle-item-visibility-opened {
   font: 22px/22px DXIcons;
   text-align: center;
+  color: #fff;
 }
 .dx-swatch-additional
   .dx-treeview-toggle-item-visibility.dx-treeview-toggle-item-visibility-opened::before {
@@ -7873,4 +7877,5 @@
   margin-top: -11px;
   left: 50%;
   margin-left: -11px;
+  
 }

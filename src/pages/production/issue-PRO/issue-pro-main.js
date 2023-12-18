@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   HeaderText,
   SubText,
@@ -51,10 +51,13 @@ const IssuePROMain = () => {
 
   const [filterStatus, setFilterStatus] = useState("All");
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [finalSelected, setFinalSelected] = useState();
+  const dataGridRef = useRef();
+
   const navigate = useNavigate();
 
   const handleInitiateClick = () => {
-    navigate("/issue-pro/generate-issue");
+    navigate("/issue-pro/Generate-issue");
   };
 
   const handleFilterChange = (value) => {
@@ -70,11 +73,19 @@ const IssuePROMain = () => {
     }
   };
 
-  const onSelectionChanged = ({ selectedRowKeys, selectedRowsData }) => {
-    console.log("onSelectionChanged", selectedRowsData);
-    setSelectedRowKeys(selectedRowKeys);
-  };
+  const handleSelectionChanged = (e) => {
+    const selectedKeys = e.selectedRowKeys;
 
+    if (selectedKeys.length > 1) {
+      const value = dataGridRef.current.instance.selectRows(
+        selectedKeys[selectedKeys.length - 1]
+      );
+      setFinalSelected(selectedKeys[selectedKeys.length - 1]);
+    } else {
+      const value = dataGridRef.current.instance.selectRows(selectedKeys[0]);
+      setFinalSelected(selectedKeys[0]);
+    }
+  };
   let dataGrid;
 
   return (
@@ -106,7 +117,7 @@ const IssuePROMain = () => {
         </div>
       </div>
       <div className="content-block dx-card">
-        <div className="data-grid-container data-grid">
+        <div className="data-grid-container data-grid verify-pro-datagrid">
           <DataGrid
             className={"dx-card wide-card"}
             dataSource={dataSource}
@@ -116,11 +127,9 @@ const IssuePROMain = () => {
             selection={{
               mode: "multiple",
             }}
-            ref={(ref) => {
-              dataGrid = ref;
-            }}
             selectedRowKeys={selectedRowKeys}
-            onSelectionChanged={onSelectionChanged}
+            onSelectionChanged={handleSelectionChanged}
+            ref={dataGridRef}
           >
             <Paging defaultPageSize={10} />
 
@@ -169,6 +178,7 @@ const IssuePROMain = () => {
                   value={filterStatus}
                   onValueChanged={handleFilterChange}
                   width={200}
+                  className="selectbox-left"
                   visible={!selectedRowKeys.length}
                 />
               </Item>
@@ -178,6 +188,7 @@ const IssuePROMain = () => {
                   onValueChanged={handleFilterChange}
                   width={200}
                   visible={!selectedRowKeys.length}
+                  className="selectbox-right"
                 />
               </Item>
               <Item name="columnChooserButton" />

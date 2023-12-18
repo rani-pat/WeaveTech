@@ -1,6 +1,6 @@
 @import "../../themes/generated/variables.base.scss";
 
-.user-info {
+.add-info {
   display: flex;
   align-items: center;
 
@@ -9,38 +9,42 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 
-  .image-container {
+  .add-image-container {
     overflow: hidden;
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     margin: 0 4px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    background-color: #0057a1;
 
-    .user-image {
-      width: 100%;
-      height: 100%;
+    .add-image {
+      width: 45%;
+      height: 45%;
+      margin-left: 6px;
+      margin-top: 6px;
     }
-  }
-
-  .user-name {
-    font-size: 14px;
-    color: $base-text-color;
-    margin: 0 9px;
   }
 }
 
-.user-panel {
-  .dx-list-item .dx-icon {
+.add-panel {
+  .dx-list-item.dx-icon {
     vertical-align: middle;
     color: $base-text-color;
     margin-right: 16px;
   }
   .dx-rtl .dx-list-item .dx-icon {
-    margin-right: 0;
+    margin-right: 10px;
     margin-left: 16px;
   }
+}
+.dx-overlay-content.dx-inner-overlay.dx-context-menu.user-menu.dx-menu-base {
+  // position: absolute;
+  // width: auto !important;
+  // top: 10px !important;
+  // right: 0 !important;
+  // transform: translate(1563px, 60px) !important;
 }
 
 .dx-context-menu.user-menu.dx-menu-base {
@@ -53,7 +57,7 @@
     margin-right: 16px;
   }
   .dx-menu-item .dx-menu-item-content {
-    padding: 3px 15px 4px;
+    padding: 8px 25px 10px;
   }
 }
 

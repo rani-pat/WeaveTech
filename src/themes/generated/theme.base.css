@@ -2711,7 +2711,7 @@
   background-color: transparent;
   border-color: transparent;
   color: #2d6da3;
-  margin-right: 15px;
+  /* margin-right: 15px; */
 }
 .dx-button-mode-text.dx-button-default .dx-icon {
   color: #2d6da3;
@@ -6393,7 +6393,7 @@
 }
 .dx-dropdowneditor.dx-state-active .dx-dropdowneditor-icon,
 .dx-dropdowneditor.dx-state-hover:not(.dx-custom-button-hovered) .dx-dropdowneditor-icon {
-  background-color: #e6e6e6;
+  /* background-color: #e6e6e6; */
   border-color: transparent;
 }
 .dx-editor-filled.dx-dropdowneditor.dx-state-active .dx-dropdowneditor-icon,
@@ -6402,7 +6402,7 @@
 }
 .dx-dropdowneditor-button.dx-state-active .dx-dropdowneditor-icon,
 .dx-dropdowneditor.dx-dropdowneditor-active .dx-dropdowneditor-icon {
-  background-color: #b3b3b3;
+  /* background-color: #b3b3b3; */
   border-color: transparent;
   color: #333;
   opacity: 1;
@@ -6778,6 +6778,7 @@
 .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-hover {
   background-color: rgba(0,0,0,.04);
   color: #333;
+  border-left: 1px solid #0057a1;
 }
 .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-hover .dx-icon {
   color: #333;
@@ -6817,8 +6818,8 @@
   color: #fff;
 }
 .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-active {
-  background-color: #0057a1;
-  color: #fff;
+  background-color: #E6E6E6;
+  color: #000;
 }
 .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-state-active .dx-icon {
   color: #fff;
@@ -7195,18 +7196,22 @@
 .dx-calendar-navigator {
   position: relative;
   width: 100%;
+  border: none
+
 }
 .dx-calendar-navigator .dx-calendar-caption-button {
   text-decoration: none;
   font-size: 16px;
   font-weight: 700;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   right: 36px;
   left: 36px;
+  border: none
 }
 .dx-calendar-navigator-next-view,
 .dx-calendar-navigator-previous-view {
   background: 0 0;
+  border: none;
 }
 .dx-calendar-navigator-next-view.dx-button,
 .dx-calendar-navigator-previous-view.dx-button {
@@ -7291,7 +7296,7 @@
   background: 0 0;
 }
 .dx-calendar.dx-calendar-with-footer .dx-calendar-footer .dx-button.dx-state-active {
-  background-color: #d4d4d4;
+  /* background-color: #d4d4d4; */
 }
 .dx-calendar-navigator {
   height: 36px;
@@ -7299,8 +7304,8 @@
 .dx-calendar-navigator .dx-button {
   position: absolute;
   height: 100%;
-  border-radius: 0;
-  border-color: #ddd;
+  /* border-radius: 0; */
+  /* border-color: #ddd; */
 }
 .dx-calendar-navigator .dx-button.dx-calendar-disabled-navigator-link {
   visibility: visible;
@@ -7314,13 +7319,13 @@
 }
 .dx-calendar-navigator .dx-button.dx-state-hover:not(.dx-calendar-disabled-navigator-link) {
   z-index: 1;
-  border-color: #ddd;
+  /* border-color: #ddd; */
 }
 .dx-calendar-navigator .dx-calendar-caption-button.dx-button.dx-state-active {
-  background-color: #d4d4d4;
+  /* background-color: #d4d4d4; */
 }
 .dx-calendar-navigator .dx-calendar-caption-button.dx-button .dx-button-content {
-  color: #0057a1;
+  color: #000;
 }
 .dx-calendar-navigator-next-view,
 .dx-calendar-navigator-previous-view {
@@ -7328,45 +7333,53 @@
 }
 .dx-calendar-navigator-next-view.dx-button .dx-icon,
 .dx-calendar-navigator-previous-view.dx-button .dx-icon {
-  color: #0057a1;
+  color: #000;
 }
 .dx-calendar-navigator-previous-view.dx-button {
-  border-radius: 4px 0 0 4px;
+  /* border-radius: 4px 0 0 4px; */
 }
 .dx-calendar-navigator-next-view.dx-button {
-  border-radius: 0 4px 4px 0;
+  /* border-radius: 0 4px 4px 0; */
 }
 .dx-calendar-body thead {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  line-height: 1.2;
+  color:  #262626;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.5;
 }
 .dx-calendar-body thead tr {
   height: 25px;
   padding-bottom: 10px;
 }
-.dx-calendar-body thead tr th {
+/* .dx-calendar-body thead tr th {
   -webkit-box-shadow: inset 0 -1px 0 #ddd;
   box-shadow: inset 0 -1px 0 #ddd;
   color: #999;
-}
+} */
 .dx-calendar-body table th {
-  color: #999;
+  color:  #262626;
   text-align: center;
-  font-size: 12px;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.5;
   padding: 1px 0 6px;
 }
 .dx-calendar-body table .dx-week-number-header {
-  color: #0057a1;
+  color: #000;
 }
 .dx-calendar-cell {
   white-space: normal;
   text-align: center;
-  padding: 1px 8px 2px;
-  color: #333;
-  font-size: 15px;
-  border: 1px double transparent;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 3;
   width: 39px;
   border-radius: 4px;
 }
@@ -7819,7 +7832,7 @@
 }
 .dx-dropdownlist-popup-wrapper .dx-popup-content {
   height: 100%;
-  padding: 1px;
+  padding: 6px 0 6px 0;
 }
 .dx-dropdownlist-popup-wrapper .dx-list {
   height: 100%;
@@ -7829,7 +7842,7 @@
   min-height: 33.0001px;
 }
 .dx-dropdownlist-popup-wrapper .dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item-content {
-  padding: 7px 9px;
+  padding: 10px 9px;
 }
 .dx-dropdownlist-popup-wrapper .dx-list-select-all {
   padding: 12px 0 8px;
@@ -8335,6 +8348,8 @@
 .dx-menu-item.dx-state-hover {
   color: #333;
   background-color: rgba(0,0,0,.04);
+  border-left: 1px solid #0057a1 ;
+  padding: 0px;
 }
 .dx-menu-item.dx-state-focused {
   background-color: #0057a1;
@@ -8373,7 +8388,7 @@
   height: 18px;
   background-position: 0 0;
   background-size: 18px 18px;
-  padding: 0;
+  padding: 0px;
   font-size: 18px;
   text-align: center;
   line-height: 18px;
@@ -8382,7 +8397,7 @@
   padding: 3px 5px 7px;
 }
 .dx-menu-base .dx-menu-item-content .dx-menu-item-text {
-  padding: 3px 25px 5px 23px;
+  padding: 3px 25px 20px 35px;
 }
 .dx-menu-base .dx-menu-item-content .dx-menu-item-popout {
   min-width: 7px;
@@ -8937,7 +8952,7 @@
   padding: 0;
 }
 .dx-toolbar .dx-toolbar-items-container {
-  height: 36px;
+  height: 40px;
   overflow: visible;
 }
 .dx-toolbar .dx-toolbar-menu-container {
@@ -12030,6 +12045,7 @@
 .dx-datagrid-content .dx-datagrid-table .dx-row > tr > td.dx-first-child,
 .dx-datagrid-content .dx-datagrid-table .dx-row > tr > td:first-child {
   border-left: 0;
+  /* padding-left: 10px; */
 }
 .dx-datagrid-content .dx-datagrid-table .dx-row > td.dx-last-child,
 .dx-datagrid-content .dx-datagrid-table .dx-row > tr > td.dx-last-child {
@@ -12768,6 +12784,7 @@
   border-left: none;
   height: 64px;
   text-align: left;
+  padding-left:25px ;
 }
 .dx-datagrid .dx-column-lines > td:last-child {
   border-right: none;
@@ -16754,7 +16771,7 @@ input.dx-hidden {
   position: absolute;
 }
 .dx-context-menu .dx-menu-items-container {
-  padding: 1px;
+  /* padding: 1px; */
 }
 .dx-context-menu .dx-menu-item .dx-submenu {
   position: absolute;

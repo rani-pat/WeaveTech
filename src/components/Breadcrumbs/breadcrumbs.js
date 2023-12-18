@@ -87,7 +87,8 @@ const Breadcrumbs = ({ navigation, routes }) => {
         {breadcrumbItems.map((breadcrumb, index) => (
           <span key={index}>
             {index > 0 && <span> / </span>}
-            {breadcrumb.link ? (
+            {breadcrumb.link &&
+            breadcrumb.label.split("/").length - 1 > index ? (
               <NavLink
                 to={breadcrumb.link}
                 className="breadcrumb-link"
@@ -101,9 +102,7 @@ const Breadcrumbs = ({ navigation, routes }) => {
           </span>
         ))}
       </div>
-      <div>
-        <Button text="refresh" type="default" stylingMode="text" height={0} />
-      </div>
+      <div className="refresh-btn">Refresh</div>
     </div>
   );
 };

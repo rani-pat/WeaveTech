@@ -4,3 +4,7 @@ export { default as SVG3 } from "./css/SVGs/SVG3.svg";
 export { default as SVG4 } from "./css/SVGs/SVG4.svg";
 export { default as PopupIcon } from "./css/SVGs/PopUpIcon.svg";
 export { default as DeleteIcon } from "./css/SVGs/DeleteIcon.svg";
+export { default as addIcon } from "./css/SVGs/Add.svg";
+export { default as rejectPopupIcon } from "./css/icon/rejectpopup.png";
+export { default as approvePopupIcon } from "./css/icon/approvepopup.png";
+export { default as folderIcon } from "./css/icon/folder.png";

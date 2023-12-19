@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
   HeaderText,
-  PopupHeaderText,
-  PopupSubText,
   SubText,
 } from "../../../components/typographyText/TypograghyText";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
@@ -21,14 +19,11 @@ import DataGrid, {
   Item,
   Selection,
   Scrolling,
-  Button as dataGridButton,
   Editing,
 } from "devextreme-react/data-grid";
 import { SelectBox, Button, TextBox } from "devextreme-react";
-import { Template } from "devextreme-react/core/template";
-import { Popup, Position, ToolbarItem } from "devextreme-react/popup";
-import { faL } from "@fortawesome/free-solid-svg-icons";
 import "./verify_pro.scss";
+import { UseVerifyProContext } from "../../../contexts/verifyPro";
 
 const VerifyPRO = () => {
   const dataSource = {
@@ -57,36 +52,41 @@ const VerifyPRO = () => {
     { name: "Low", value: 1 },
   ];
   const [filterStatus, setFilterStatus] = useState("All");
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [finalSelected, setFinalSelected] = useState();
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const navigate = useNavigate();
   const dataGridRef = useRef();
+  const { setStatusValue } = UseVerifyProContext();
 
-  const handleInitiateClick = () => {
-    navigate("/verify-pro-listing/Verify-initiate-pro");
-  };
-  const handleOpenPopup = () => {
-    setIsPopupVisible(true);
-  };
-  const handleClosePopup = () => {
-    setIsPopupVisible(false);
-    dataGridRef.current.instance.option("selectedRowKeys", []);
+  const handleIconClick = (clickedRow) => {
+    if (clickedRow) {
+      if (clickedRow.Task_Status === "Completed") {
+        setStatusValue("completed");
+        navigate("/verify-pro-listing/Verify-initiate-pro");
+      } else if (clickedRow.Task_ID === 4) {
+        setStatusValue("pending");
+        navigate("/verify-pro-listing/Verify-initiate-pro");
+      }
+    }
   };
 
   const handleSelectionChanged = (e) => {
     const selectedKeys = e.selectedRowKeys;
+    setSelectedRowKeys(selectedKeys);
 
-    if (selectedKeys.length > 1) {
-      const value = dataGridRef.current.instance.selectRows(
-        selectedKeys[selectedKeys.length - 1]
-      );
-      setFinalSelected(selectedKeys[selectedKeys.length - 1]);
-    } else {
-      const value = dataGridRef.current.instance.selectRows(selectedKeys[0]);
-      setFinalSelected(selectedKeys[0]);
+    if (dataGridRef.current && dataGridRef.current.instance) {
+      if (selectedKeys.length > 1) {
+        const value = dataGridRef.current.instance.selectRows(
+          selectedKeys[selectedKeys.length - 1]
+        );
+        setFinalSelected(selectedKeys[selectedKeys.length - 1]);
+      } else {
+        const value = dataGridRef.current.instance.selectRows(selectedKeys[0]);
+        setFinalSelected(selectedKeys[0]);
+      }
     }
 
-    handleOpenPopup();
+    handleIconClick();
   };
 
   let selectBoxMonth;
@@ -107,59 +107,6 @@ const VerifyPRO = () => {
   let dataGrid;
   return (
     <>
-      <Popup
-        visible={isPopupVisible}
-        onHiding={handleClosePopup}
-        width={480}
-        height={240}
-        showCloseButton={false}
-        dragEnabled={false}
-        showTitle={false}
-      >
-        <div className="release-popup-main">
-          <div style={{ backgroundColor: "#F0F7FF" }}>
-            <img src={folderIcon} style={{ padding: "7px" }} />
-          </div>
-          <div className="popup-close-btn">
-            <Button icon="close" onClick={handleClosePopup} />
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "5px",
-            marginTop: "20px",
-          }}
-        >
-          <PopupHeaderText text={"Details of Production Order"} />
-          <PopupSubText text={"Do you want to see the details ?"} />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "10px",
-            marginTop: "24px",
-          }}
-        >
-          <Button
-            text="Cancel"
-            width={216}
-            height={44}
-            onClick={handleClosePopup}
-            className="cancelQcBtn"
-          />
-          <Button
-            text="OK"
-            type="default"
-            width={216}
-            height={44}
-            onClick={handleInitiateClick}
-            className="OkQcBtn"
-          />
-        </div>
-      </Popup>
       <Breadcrumbs navigation={navigation} routes={routes} />
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
@@ -190,6 +137,19 @@ const VerifyPRO = () => {
             <Selection mode="multiple" />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
+            <Column
+              width={50}
+              cellRender={(data) => (
+                <div className="custom-cell">
+                  {selectedRowKeys.includes(data.data.Task_ID) && (
+                    <Button
+                      icon="background"
+                      onClick={() => handleIconClick(data.data)}
+                    />
+                  )}
+                </div>
+              )}
+            />
 
             <Column
               dataField={"Task_Subject"}

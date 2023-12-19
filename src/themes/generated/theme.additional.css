@@ -7660,6 +7660,11 @@
 }
 .dx-swatch-additional .dx-treeview-item .dx-treeview-item-content span {
   vertical-align: middle;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
 }
 .dx-swatch-additional .dx-treeview-item.dx-state-disabled {
   opacity: 0.5;

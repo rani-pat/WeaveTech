@@ -1,13 +1,17 @@
 import {
   HomePage,
-  TasksPage,
-  ProfilePage,
   CreatePRO,
   IntiatePRO,
   VerifyPRO,
   VerifyInitiatePRO,
   IssuePROMain,
   GenerateIssue,
+  VerifyIssuePROMain,
+  VerifyIssuePRO,
+  ReceiptPROMain,
+  GenearteReceiptPRO,
+  VerifyReceiptPROMain,
+  VerifyReceiptPRO,
 } from "./pages";
 import { withNavigationWatcher } from "./contexts/navigation";
 
@@ -39,6 +43,30 @@ const routes = [
   {
     path: "/issue-pro/Generate-issue",
     element: GenerateIssue,
+  },
+  {
+    path: "/verify-issue-pro-listing",
+    element: VerifyIssuePROMain,
+  },
+  {
+    path: "/verify-issue-pro-listing/Verify-issue-pro",
+    element: VerifyIssuePRO,
+  },
+  {
+    path: "/receipt-pro",
+    element: ReceiptPROMain,
+  },
+  {
+    path: "/receipt-pro/Generate-receipt",
+    element: GenearteReceiptPRO,
+  },
+  {
+    path: "/verify-receipt",
+    element: VerifyReceiptPROMain,
+  },
+  {
+    path: "/verify-receipt/Verify-receipt-pro",
+    element: VerifyReceiptPRO,
   },
 ];
 

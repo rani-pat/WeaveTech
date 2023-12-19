@@ -28,7 +28,7 @@ export const navigation = [
       },
       {
         text: "Verify Issue",
-        path: "/verify-issue",
+        path: "/verify-issue-pro-listing",
         icon: "checklist",
       },
       {

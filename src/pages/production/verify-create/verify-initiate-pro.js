@@ -22,7 +22,6 @@ import { navigation } from "../../../app-navigation";
 import routes from "../../../app-routes";
 import ApprovalPopup from "./approvePopup";
 import RejectionPopup from "./rejectPopup";
-
 import DataGrid, {
   Column,
   Lookup,
@@ -34,6 +33,7 @@ import DataGrid, {
   Editing,
 } from "devextreme-react/data-grid";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { UseVerifyProContext } from "../../../contexts/verifyPro";
 
 const VerifyInitiatePRO = () => {
   const dataSource = {
@@ -66,6 +66,7 @@ const VerifyInitiatePRO = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [popupType, setPopupType] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
+  const { status, setstatus } = UseVerifyProContext();
 
   const handleToggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -108,6 +109,7 @@ const VerifyInitiatePRO = () => {
         <div className="navigation-header-create-pro">
           <div className="title-section">
             <HeaderText text={"Verify an Initiated New Production Order"} />
+            <div>Status : {status}</div>
           </div>
           <div
             className="buttons-section"
@@ -122,6 +124,7 @@ const VerifyInitiatePRO = () => {
               width={124}
               height={44}
               onClick={() => handleOpenPopup("rejection")}
+              disabled={status === "completed"}
             />
             <Button
               text="Approve"
@@ -129,6 +132,7 @@ const VerifyInitiatePRO = () => {
               width={124}
               height={44}
               onClick={() => handleOpenPopup("approval")}
+              disabled={status === "completed"}
             />
           </div>
         </div>

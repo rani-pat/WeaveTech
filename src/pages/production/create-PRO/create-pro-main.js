@@ -9,7 +9,7 @@ import Card from "../../../components/card/card";
 import { SVG1, SVG2, SVG3, SVG4 } from "../../../assets";
 import { useNavigate } from "react-router-dom";
 import { navigation } from "../../../app-navigation";
-
+import { UseCreateProContext } from "../../../contexts/createPro";
 import DataGrid, {
   Column,
   Lookup,
@@ -18,6 +18,7 @@ import DataGrid, {
   ColumnChooser,
   Toolbar,
   Item,
+  Pager,
 } from "devextreme-react/data-grid";
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
@@ -54,6 +55,9 @@ const CreatePRO = () => {
   const [selectedRowCount, setSelectedRowCount] = useState(0);
   const [clickedRowKey, setClickedRowKey] = useState(null);
 
+  const { setStatusValue } = UseCreateProContext();
+  const navigate = useNavigate();
+
   const onRowClick = (e) => {
     const clickedKey = e.data ? e.data.Task_ID : null;
     setClickedRowKey(clickedKey);
@@ -64,15 +68,15 @@ const CreatePRO = () => {
     if (selectedRows.length === 1) {
       const selectedRow = selectedRows[0];
       if (selectedRow.Task_Status === "Completed") {
+        setStatusValue("completed");
         navigate("/create-pro/Initiate-pro");
       } else if (selectedRow.Task_ID === 4) {
-        console.log("pending");
+        setStatusValue("pending");
         navigate("/create-pro/Initiate-pro");
       }
     }
   };
 
-  const navigate = useNavigate();
   const handleInitiateClick = () => {
     navigate("/create-pro/Initiate-pro");
   };
@@ -145,7 +149,14 @@ const CreatePRO = () => {
             onSelectedRowKeysChange={onRowClick}
           >
             <Paging defaultPageSize={10} />
-
+            <Pager
+              visible={true}
+              // allowedPageSizes={allowedPageSizes}
+              // displayMode={displayMode}
+              // showPageSizeSelector={showPageSizeSelector}
+              // showInfo={showInfo}
+              // showNavigationButtons={showNavButtons}
+            />
             <SearchPanel visible={!selectedRowKeys.length} width={300} />
             <ColumnChooser enabled={!selectedRowKeys.length} />
             <Column
@@ -228,12 +239,12 @@ const CreatePRO = () => {
                   text="Cancel"
                   type="normal"
                   stylingMode="text"
-                  visible={selectedRowKeys.length >= 2}
+                  visible={selectedRowKeys.length > 0}
                 />
               </Item>
               <Item location="after">
                 <Button
-                  visible={selectedRowKeys.length >= 2}
+                  visible={selectedRowKeys.length > 0}
                   text="Release"
                   type="default"
                   stylingMode="text"

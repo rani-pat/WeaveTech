@@ -17,12 +17,13 @@ import DataGrid, {
   Toolbar,
   Item,
   Selection,
+  Pager,
 } from "devextreme-react/data-grid";
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
-import { UseIssueProContext } from "../../../contexts/issuePro";
+import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
 
-const IssuePROMain = () => {
+const VerifyReceiptPROMain = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -54,19 +55,16 @@ const IssuePROMain = () => {
   const [finalSelected, setFinalSelected] = useState();
   const dataGridRef = useRef();
   const navigate = useNavigate();
-  const { setStatusValue } = UseIssueProContext();
+  const { setStatusValue } = UseVerifyIssueProContext();
 
-  const handleInitiateClick = () => {
-    navigate("/issue-pro/Generate-issue");
-  };
   const handleIconClick = (clickedRow) => {
     if (clickedRow) {
       if (clickedRow.Task_Status === "Completed") {
         setStatusValue("completed");
-        navigate("/issue-pro/Generate-issue");
+        navigate("/verify-receipt/Verify-receipt-pro");
       } else if (clickedRow.Task_ID === 4) {
         setStatusValue("pending");
-        navigate("/issue-pro/Generate-issue");
+        navigate("/verify-receipt/Verify-receipt-pro");
       }
     }
   };
@@ -86,7 +84,6 @@ const IssuePROMain = () => {
         setFinalSelected(selectedKeys[0]);
       }
     }
-
     handleIconClick();
   };
 
@@ -112,17 +109,7 @@ const IssuePROMain = () => {
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"Issued Production Order"} />
-          </div>
-          <div className="title-section-btn">
-            <Button
-              text="Issue PRO"
-              type="default"
-              icon="add"
-              height={44}
-              width={144}
-              onClick={handleInitiateClick}
-            />
+            <HeaderText text={"List of Receipt Production Order"} />
           </div>
         </div>
       </div>
@@ -145,6 +132,11 @@ const IssuePROMain = () => {
             onSelectionChanged={handleSelectionChanged}
           >
             <Paging defaultPageSize={10} />
+            <Pager
+              // showInfo={true}
+              showNavigationButtons={true}
+              allowedPageSizes={[10, 20, 30]}
+            />
             <Selection mode="multiple" />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
@@ -230,4 +222,4 @@ const IssuePROMain = () => {
   );
 };
 
-export default IssuePROMain;
+export default VerifyReceiptPROMain;

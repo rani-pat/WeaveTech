@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import {
   HeaderText,
   SubText,
-  PopupHeaderText,
-  PopupSubText,
 } from "../../../components/typographyText/TypograghyText";
-// import "./verify_pro.scss";
 import {
   Button as NormalButton,
   Button,
@@ -31,9 +28,9 @@ import DataGrid, {
   Editing,
   Selection,
 } from "devextreme-react/data-grid";
-import { UseIssueProContext } from "../../../contexts/issuePro";
+import { UseReceiptProContext } from "../../../contexts/receipt-pro";
 
-const GenerateIssue = () => {
+const GenearteReceiptPRO = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -61,7 +58,7 @@ const GenerateIssue = () => {
   ];
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [popupType, setPopupType] = useState("");
-  const { status, setstatus } = UseIssueProContext();
+  const { status, setstatus } = UseReceiptProContext();
 
   const NewItemsOptions = {
     icon: PopupIcon,
@@ -83,7 +80,7 @@ const GenerateIssue = () => {
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"Generate an Issue for the Production Order"} />
+            <HeaderText text={"Generate a Receipt for the Production Order"} />
             <div>Status : {status}</div>
           </div>
           <div className="title-section-btn">
@@ -115,17 +112,18 @@ const GenerateIssue = () => {
               className="popup-icon"
             />
           </TextBox>
+
+          <TextBox
+            label="Reference Number"
+            placeholder="Reference Number..."
+            height={56}
+            showClearButton={true}
+          />
           <DateBox
             label="Posting Date"
             height={56}
             displayFormat="yyyy-MM-dd"
             stylingMode="outlined"
-            showClearButton={true}
-          />
-          <TextBox
-            label="Reference Number"
-            placeholder="Reference Number..."
-            height={56}
             showClearButton={true}
           />
         </div>
@@ -183,9 +181,7 @@ const GenerateIssue = () => {
                   <SubText text={"All the items"} />
                 </div>
               </Item>
-
               <Item name="searchPanel" />
-
               <Item name="columnChooserButton" />
             </Toolbar>
           </DataGrid>
@@ -194,4 +190,4 @@ const GenerateIssue = () => {
     </>
   );
 };
-export default GenerateIssue;
+export default GenearteReceiptPRO;

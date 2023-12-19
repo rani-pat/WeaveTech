@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import {
   HeaderText,
   SubText,
-  PopupHeaderText,
-  PopupSubText,
 } from "../../../components/typographyText/TypograghyText";
-// import "./verify_pro.scss";
 import {
   Button as NormalButton,
   Button,
@@ -31,9 +28,9 @@ import DataGrid, {
   Editing,
   Selection,
 } from "devextreme-react/data-grid";
-import { UseIssueProContext } from "../../../contexts/issuePro";
+import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
 
-const GenerateIssue = () => {
+const VerifyReceiptPRO = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -61,7 +58,7 @@ const GenerateIssue = () => {
   ];
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [popupType, setPopupType] = useState("");
-  const { status, setstatus } = UseIssueProContext();
+  const { status, setstatus } = UseVerifyIssueProContext();
 
   const NewItemsOptions = {
     icon: PopupIcon,
@@ -83,16 +80,31 @@ const GenerateIssue = () => {
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"Generate an Issue for the Production Order"} />
+            <HeaderText text={"Verify Receipt for the Production Order"} />
             <div>Status : {status}</div>
           </div>
-          <div className="title-section-btn">
-            <NormalButton
-              text="For Verification"
+          <div
+            className="buttons-section"
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "10px",
+            }}
+          >
+            <Button
+              text="Reject"
+              width={124}
               height={44}
-              width={144}
+              onClick={() => handleOpenPopup("rejection")}
+              disabled={status === "completed"}
+            />
+            <Button
+              text="Approve"
               type="default"
-              disabled={status == "completed"}
+              width={124}
+              height={44}
+              onClick={() => handleOpenPopup("approval")}
+              disabled={status === "completed"}
             />
           </div>
         </div>
@@ -183,9 +195,7 @@ const GenerateIssue = () => {
                   <SubText text={"All the items"} />
                 </div>
               </Item>
-
               <Item name="searchPanel" />
-
               <Item name="columnChooserButton" />
             </Toolbar>
           </DataGrid>
@@ -194,4 +204,4 @@ const GenerateIssue = () => {
     </>
   );
 };
-export default GenerateIssue;
+export default VerifyReceiptPRO;

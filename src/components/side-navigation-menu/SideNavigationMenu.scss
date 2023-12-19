@@ -22,7 +22,9 @@
       .dx-treeview-item {
         padding-left: 0;
         padding-right: 0;
-        margin-top: 15px;
+        margin-top: 8px;
+        padding-top: 10px;
+        padding-bottom: 10px;
 
         .dx-icon {
           width: $side-panel-min-width !important;
@@ -51,6 +53,7 @@
       .dx-treeview-node {
         &[aria-level="1"] {
           font-weight: bold;
+
           // border-bottom: 1px solid $base-border-color;
         }
 
@@ -69,6 +72,7 @@
           &.dx-state-selected:not(.dx-state-focused) > .dx-treeview-item {
             // background: transparent;
             background: #fff;
+            // margin: 16px;
           }
 
           &.dx-state-selected > .dx-treeview-item * {

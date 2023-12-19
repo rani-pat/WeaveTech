@@ -21,7 +21,7 @@ import Breadcrumbs from "../../../../components/Breadcrumbs/breadcrumbs";
 import { navigation } from "../../../../app-navigation";
 import routes from "../../../../app-routes";
 import ProjectPopup from "./project-popup";
-
+import "devextreme/data/odata/store";
 import DataGrid, {
   Column,
   Lookup,
@@ -34,6 +34,7 @@ import DataGrid, {
   Scrolling,
 } from "devextreme-react/data-grid";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { UseCreateProContext } from "../../../../contexts/createPro";
 
 const IntiatePRO = () => {
   const dataSource = {
@@ -61,6 +62,9 @@ const IntiatePRO = () => {
     { name: "Normal", value: 2 },
     { name: "Low", value: 1 },
   ];
+
+  const { status, setstatus } = UseCreateProContext();
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [ProjectPopupVisible, setProjectPopupVisible] = useState(null);
   const [filterStatus, setFilterStatus] = useState();
@@ -132,12 +136,15 @@ const IntiatePRO = () => {
           <div className="title-section">
             <HeaderText text={"Initiate New Production Order"} />
           </div>
+          <div>Status : {status}</div>
           <div className="title-section-btn">
             <NormalButton
               text="For Verification"
               height={44}
               width={144}
-              className="btn-disable"
+              type="default"
+              disabled={status === "completed"}
+              // className="btn-disable"
             />
           </div>
         </div>

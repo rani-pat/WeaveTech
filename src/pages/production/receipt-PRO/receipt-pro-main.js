@@ -20,9 +20,9 @@ import DataGrid, {
 } from "devextreme-react/data-grid";
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
-import { UseIssueProContext } from "../../../contexts/issuePro";
+import { UseReceiptProContext } from "../../../contexts/receipt-pro";
 
-const IssuePROMain = () => {
+const ReceiptPROMain = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -54,19 +54,19 @@ const IssuePROMain = () => {
   const [finalSelected, setFinalSelected] = useState();
   const dataGridRef = useRef();
   const navigate = useNavigate();
-  const { setStatusValue } = UseIssueProContext();
+  const { setStatusValue } = UseReceiptProContext();
 
   const handleInitiateClick = () => {
-    navigate("/issue-pro/Generate-issue");
+    navigate("/receipt-pro/Generate-receipt");
   };
   const handleIconClick = (clickedRow) => {
     if (clickedRow) {
       if (clickedRow.Task_Status === "Completed") {
         setStatusValue("completed");
-        navigate("/issue-pro/Generate-issue");
+        navigate("/verify-issue-pro-listing/Verify-issue-pro");
       } else if (clickedRow.Task_ID === 4) {
         setStatusValue("pending");
-        navigate("/issue-pro/Generate-issue");
+        navigate("/verify-issue-pro-listing/Verify-issue-pro");
       }
     }
   };
@@ -86,7 +86,6 @@ const IssuePROMain = () => {
         setFinalSelected(selectedKeys[0]);
       }
     }
-
     handleIconClick();
   };
 
@@ -112,11 +111,11 @@ const IssuePROMain = () => {
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"Issued Production Order"} />
+            <HeaderText text={"Receipt on Production Order"} />
           </div>
           <div className="title-section-btn">
             <Button
-              text="Issue PRO"
+              text="Receipt PRO"
               type="default"
               icon="add"
               height={44}
@@ -230,4 +229,4 @@ const IssuePROMain = () => {
   );
 };
 
-export default IssuePROMain;
+export default ReceiptPROMain;

@@ -14,7 +14,6 @@ import {
   SelectBox,
   Popup,
 } from "devextreme-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button as TextBoxButton } from "devextreme-react/text-box";
 import { PopupIcon } from "../../../assets";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
@@ -32,7 +31,6 @@ import DataGrid, {
   Item,
   Editing,
 } from "devextreme-react/data-grid";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { UseVerifyProContext } from "../../../contexts/verifyPro";
 
 const VerifyInitiatePRO = () => {
@@ -109,8 +107,8 @@ const VerifyInitiatePRO = () => {
         <div className="navigation-header-create-pro">
           <div className="title-section">
             <HeaderText text={"Verify an Initiated New Production Order"} />
-            <div>Status : {status}</div>
           </div>
+          <div>Status : {status}</div>
           <div
             className="buttons-section"
             style={{
@@ -193,15 +191,9 @@ const VerifyInitiatePRO = () => {
         <div className="expandable-text" onClick={handleToggleExpand}>
           Additional Information, make changes
           {isExpanded ? (
-            <FontAwesomeIcon
-              icon={faChevronUp}
-              style={{ marginLeft: "25px" }}
-            />
+            <Button icon="chevronup" style={{ marginLeft: "36px" }} />
           ) : (
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              style={{ marginLeft: "25px" }}
-            />
+            <Button icon="chevrondown" style={{ marginLeft: "36px" }} />
           )}
         </div>
         {isExpanded && (
@@ -346,7 +338,7 @@ const VerifyInitiatePRO = () => {
       <div className="content-block dx-card">
         <div className="data-grid-container data-grid">
           <DataGrid
-            className={"dx-card wide-card"}
+            className="on-hover-data"
             dataSource={dataSource}
             showBorders={false}
             columnAutoWidth={true}
@@ -354,17 +346,26 @@ const VerifyInitiatePRO = () => {
             ref={(ref) => {
               dataGrid = ref;
             }}
+            hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
-
+            <Editing
+              allowDeleting={true}
+              allowUpdating={true}
+              useIcons={true}
+            />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
 
             <Column
               dataField={"Task_Subject"}
-              width={190}
+              width={300}
               caption={"Subject"}
             />
+            <Column type="buttons" width={100}>
+              <Button name="edit" />
+              <Button name="delete" />
+            </Column>
             <Column dataField={"Task_Status"} caption={"Status"} />
             <Column dataField={"Task_Priority"} caption={"Priority"}>
               <Lookup

@@ -18,7 +18,12 @@
     width: 300px;
   }
 }
-
+.expandable-text {
+  .dx-widget.dx-button.dx-button-mode-contained.dx-button-normal.dx-button-has-icon {
+    border: none;
+    background: none;
+  }
+}
 .search-panel-width {
   .popup-data {
     .dx-widget.dx-visibility-change-handler {

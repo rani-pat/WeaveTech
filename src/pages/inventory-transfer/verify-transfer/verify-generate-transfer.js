@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import {
   HeaderText,
   SubText,
-  PopupHeaderText,
-  PopupSubText,
 } from "../../../components/typographyText/TypograghyText";
-// import "./verify_pro.scss";
 import {
   Button as NormalButton,
   Button,
@@ -14,7 +11,6 @@ import {
   SelectBox,
   Popup,
 } from "devextreme-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button as TextBoxButton } from "devextreme-react/text-box";
 import { PopupIcon } from "../../../assets";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
@@ -31,9 +27,9 @@ import DataGrid, {
   Editing,
   Selection,
 } from "devextreme-react/data-grid";
-import { UseIssueProContext } from "../../../contexts/issuePro";
+import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
 
-const GenerateIssue = () => {
+const GenerateVerifyTransfer = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -61,7 +57,7 @@ const GenerateIssue = () => {
   ];
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [popupType, setPopupType] = useState("");
-  const { status, setstatus } = UseIssueProContext();
+  const { status, setstatus } = UseVerifyIssueProContext();
 
   const NewItemsOptions = {
     icon: PopupIcon,
@@ -83,18 +79,36 @@ const GenerateIssue = () => {
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"Generate an Issue for the Production Order"} />
+            <HeaderText text={"Verify an Inventory Transfer"} />
           </div>
-          <div className="title-section-btn">
-            <NormalButton
-              text="For Verification"
+          <div>Status : {status}</div>
+          <div
+            className="buttons-section"
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "10px",
+            }}
+          >
+            <Button
+              text="Reject"
+              width={124}
               height={44}
-              width={144}
+              onClick={() => handleOpenPopup("rejection")}
+              disabled={status === "completed"}
+            />
+            <Button
+              text="Approve"
               type="default"
+              width={124}
+              height={44}
+              onClick={() => handleOpenPopup("approval")}
+              disabled={status === "completed"}
             />
           </div>
         </div>
       </div>
+
       <div className="content-block dx-card responsive-paddings">
         <div className="initiate-inputs">
           <SelectBox
@@ -103,7 +117,7 @@ const GenerateIssue = () => {
             showClearButton={true}
           />
           <SelectBox label="Series" height={56} showClearButton={true} />
-          <TextBox label="Production Number" placeholder="Input" height={56}>
+          <TextBox label="From Warehouse" placeholder="Input" height={56}>
             <TextBoxButton
               name="popupSearch"
               location="after"
@@ -113,6 +127,18 @@ const GenerateIssue = () => {
               className="popup-icon"
             />
           </TextBox>
+          <TextBox label="To Warehouse" placeholder="Input" height={56}>
+            <TextBoxButton
+              name="popupSearch"
+              location="after"
+              options={NewItemsOptions}
+              height={44}
+              width={44}
+              className="popup-icon"
+            />
+          </TextBox>
+        </div>
+        <div className="initiate-inputs" style={{ marginTop: "32px" }}>
           <DateBox
             label="Posting Date"
             height={56}
@@ -120,12 +146,15 @@ const GenerateIssue = () => {
             stylingMode="outlined"
             showClearButton={true}
           />
-          <TextBox
-            label="Reference Number"
-            placeholder="Reference Number..."
+          <DateBox
+            label="Doc Date"
             height={56}
+            displayFormat="yyyy-MM-dd"
+            stylingMode="outlined"
             showClearButton={true}
+            width={100}
           />
+          <SelectBox label="Price List" height={56} showClearButton={true} />
         </div>
       </div>
 
@@ -151,7 +180,6 @@ const GenerateIssue = () => {
             />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
-
             <Column
               dataField={"Task_Subject"}
               width={300}
@@ -187,12 +215,10 @@ const GenerateIssue = () => {
             <Toolbar className="Toolbar-Item">
               <Item location="before">
                 <div className="informer">
-                  <SubText text={"All the items"} />
+                  <SubText text={"All the transfer"} />
                 </div>
               </Item>
-
               <Item name="searchPanel" />
-
               <Item name="columnChooserButton" />
             </Toolbar>
           </DataGrid>
@@ -201,4 +227,4 @@ const GenerateIssue = () => {
     </>
   );
 };
-export default GenerateIssue;
+export default GenerateVerifyTransfer;

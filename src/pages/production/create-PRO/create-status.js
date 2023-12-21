@@ -4,8 +4,8 @@ import {
   SubText,
   PopupHeaderText,
   PopupSubText,
-} from "../../../../components/typographyText/TypograghyText";
-import "../create_pro.scss";
+} from "../../../components/typographyText/TypograghyText";
+import "./create_pro.scss";
 import {
   Button as NormalButton,
   Button,
@@ -15,11 +15,11 @@ import {
   Popup,
 } from "devextreme-react";
 import { Button as TextBoxButton } from "devextreme-react/text-box";
-import { PopupIcon, DeleteIcon } from "../../../../assets";
-import Breadcrumbs from "../../../../components/Breadcrumbs/breadcrumbs";
-import { navigation } from "../../../../app-navigation";
-import routes from "../../../../app-routes";
-import ProjectPopup from "./project-popup";
+import { PopupIcon, DeleteIcon } from "../../../assets";
+import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
+import { navigation } from "../../../app-navigation";
+import routes from "../../../app-routes";
+// import ProjectPopup from ".././project-popup";
 import "devextreme/data/odata/store";
 import DataGrid, {
   Column,
@@ -32,9 +32,9 @@ import DataGrid, {
   Editing,
   Scrolling,
 } from "devextreme-react/data-grid";
-import { UseCreateProContext } from "../../../../contexts/createPro";
+import { UseCreateProContext } from "../../../contexts/createPro";
 
-const IntiatePRO = () => {
+const CreateStatus = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -122,24 +122,33 @@ const IntiatePRO = () => {
         showTitle={false}
         className="initate-popup-css"
       >
-        <ProjectPopup
+        {/* <ProjectPopup
           handleCancel={handleCancelProjectPopup}
           title="List of Bill of Materials"
           caption="Choose the product you want to produce "
-        />
+        /> */}
       </Popup>
       <Breadcrumbs navigation={navigation} routes={routes} />
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"Initiate New Production Order"} />
+            {status === "completed" ? (
+              <HeaderText text={"Completed Production Order"} />
+            ) : status === "pending" ? (
+              <HeaderText text={"Pending Production Order"} />
+            ) : (
+              <HeaderText text={"Other Production Order"} />
+            )}
           </div>
+          <div>Status : {status}</div>
           <div className="title-section-btn">
             <NormalButton
               text="For Verification"
               height={44}
               width={144}
               type="default"
+              disabled={status === "completed"}
+              // className="btn-disable"
             />
           </div>
         </div>
@@ -377,7 +386,7 @@ const IntiatePRO = () => {
               width={300}
               caption={"Subject"}
             />
-            <Column type="buttons">
+            <Column type="buttons" width={50}>
               <Button name="edit" />
               <Button name="delete" />
             </Column>
@@ -526,4 +535,4 @@ const IntiatePRO = () => {
     </>
   );
 };
-export default IntiatePRO;
+export default CreateStatus;

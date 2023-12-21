@@ -131,7 +131,7 @@ const VerifyIssuePRO = () => {
       <div className="content-block dx-card">
         <div className="data-grid-container data-grid">
           <DataGrid
-            className={"dx-card wide-card"}
+            className="on-hover-data"
             dataSource={dataSource}
             showBorders={false}
             columnAutoWidth={true}
@@ -139,18 +139,27 @@ const VerifyIssuePRO = () => {
             ref={(ref) => {
               dataGrid = ref;
             }}
+            hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
             <Selection mode={"multiple"} />
-
+            <Editing
+              allowDeleting={true}
+              allowUpdating={true}
+              useIcons={true}
+            />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
 
             <Column
               dataField={"Task_Subject"}
-              width={190}
+              width={300}
               caption={"Subject"}
             />
+            <Column type="buttons" width={100}>
+              <Button name="edit" />
+              <Button name="delete" />
+            </Column>
             <Column dataField={"Task_Status"} caption={"Status"} />
             <Column dataField={"Task_Priority"} caption={"Priority"}>
               <Lookup

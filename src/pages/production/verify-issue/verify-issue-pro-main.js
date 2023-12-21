@@ -21,6 +21,7 @@ import DataGrid, {
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
+import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
 
 const VerifyIssuePROMain = () => {
   const dataSource = {
@@ -57,11 +58,13 @@ const VerifyIssuePROMain = () => {
   const { setStatusValue } = UseVerifyIssueProContext();
 
   const handleIconClick = (clickedRow) => {
-    if (clickedRow) {
-      if (clickedRow.Task_Status === "Completed") {
+    const selectedRows = dataGridRef.current.instance.getSelectedRowsData();
+    if (selectedRows.length === 1) {
+      const selectedRow = selectedRows[0];
+      if (selectedRow.Task_Status === "Completed") {
         setStatusValue("completed");
         navigate("/verify-issue-pro-listing/Verify-issue-pro");
-      } else if (clickedRow.Task_ID === 4) {
+      } else if (selectedRow.Task_ID === 4) {
         setStatusValue("pending");
         navigate("/verify-issue-pro-listing/Verify-issue-pro");
       }
@@ -70,8 +73,6 @@ const VerifyIssuePROMain = () => {
 
   const handleSelectionChanged = (e) => {
     const selectedKeys = e.selectedRowKeys;
-    setSelectedRowKeys(selectedKeys);
-
     if (dataGridRef.current && dataGridRef.current.instance) {
       if (selectedKeys.length > 1) {
         const value = dataGridRef.current.instance.selectRows(
@@ -83,7 +84,6 @@ const VerifyIssuePROMain = () => {
         setFinalSelected(selectedKeys[0]);
       }
     }
-    handleIconClick();
   };
 
   let selectBoxMonth;
@@ -124,34 +124,31 @@ const VerifyIssuePROMain = () => {
         <div className="data-grid-container data-grid verify-pro-datagrid">
           <DataGrid
             dataSource={dataSource}
+            className="on-hover-data"
             showBorders={false}
             columnAutoWidth={true}
             columnHidingEnabled={true}
             ref={dataGridRef}
             onSelectionChanged={handleSelectionChanged}
+            hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
             <Selection mode="multiple" />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
-            <Column
-              width={50}
-              cellRender={(data) => (
-                <div className="custom-cell">
-                  {selectedRowKeys.includes(data.data.Task_ID) && (
-                    <Button
-                      icon="background"
-                      onClick={() => handleIconClick(data.data)}
-                    />
-                  )}
-                </div>
-              )}
-            />
 
             <Column
               dataField={"Task_Subject"}
-              width={190}
+              width={300}
               caption={"Subject"}
+            />
+            <Column
+              width={100}
+              cellRender={() => (
+                <Button onClick={handleIconClick}>
+                  <LaunchSharpIcon style={{ color: "#525252" }} />
+                </Button>
+              )}
             />
             <Column dataField={"Task_Status"} caption={"Status"} />
             <Column dataField={"Task_Priority"} caption={"Priority"}>

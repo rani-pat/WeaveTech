@@ -24,7 +24,7 @@ import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
 import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
 
-const VerifyReceiptPROMain = () => {
+const VerifyTransferMain = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -64,10 +64,10 @@ const VerifyReceiptPROMain = () => {
       const selectedRow = selectedRows[0];
       if (selectedRow.Task_Status === "Completed") {
         setStatusValue("completed");
-        navigate("/verify-receipt/Verify-receipt-pro");
+        navigate("/verify-transfer/Generate-verify-transfer");
       } else if (selectedRow.Task_ID === 4) {
         setStatusValue("pending");
-        navigate("/verify-receipt/Verify-receipt-pro");
+        navigate("/verify-transfer/Generate-verify-transfer");
       }
     }
   };
@@ -97,10 +97,10 @@ const VerifyReceiptPROMain = () => {
     { value: "This Month", text: "This Month" },
   ];
   const allCreatedpro = [
-    { value: "All", text: "All Created Production" },
-    { value: "Pending Production", text: "Pending Production" },
-    { value: "Approve Production", text: "Approve Production" },
-    { value: "Reject Production", text: "Reject Production" },
+    { value: "All", text: "All Transfer" },
+    { value: "Pending Production", text: "Approve Transfer" },
+    { value: "Approve Production", text: "Reject Transfer" },
+    { value: "Reject Production", text: "Pending Transfer" },
   ];
   let dataGrid;
 
@@ -110,7 +110,7 @@ const VerifyReceiptPROMain = () => {
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"List of Receipt Production Order"} />
+            <HeaderText text={"List of Inventory Transfer"} />
           </div>
         </div>
       </div>
@@ -125,14 +125,13 @@ const VerifyReceiptPROMain = () => {
       <div className="content-block dx-card">
         <div className="data-grid-container data-grid verify-pro-datagrid">
           <DataGrid
-            className="on-hover-data"
             dataSource={dataSource}
             showBorders={false}
             columnAutoWidth={true}
             columnHidingEnabled={true}
             ref={dataGridRef}
             onSelectionChanged={handleSelectionChanged}
-            hoverStateEnabled={true}
+            className="on-hover-data"
           >
             <Paging defaultPageSize={10} />
             <Pager
@@ -143,7 +142,6 @@ const VerifyReceiptPROMain = () => {
             <Selection mode="multiple" />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
-
             <Column
               dataField={"Task_Subject"}
               width={300}
@@ -184,7 +182,7 @@ const VerifyReceiptPROMain = () => {
             <Toolbar className="Toolbar-Item">
               <Item location="before">
                 <div className="informer">
-                  <SubText text={"All PRO’s"} />
+                  <SubText text={"All Transfer"} />
                 </div>
               </Item>
               <Item name="searchPanel" />
@@ -220,4 +218,4 @@ const VerifyReceiptPROMain = () => {
   );
 };
 
-export default VerifyReceiptPROMain;
+export default VerifyTransferMain;

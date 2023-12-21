@@ -19,9 +19,11 @@ import DataGrid, {
   Toolbar,
   Item,
   Pager,
+  Editing,
 } from "devextreme-react/data-grid";
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
+import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
 
 const CreatePRO = () => {
   const dataSource = {
@@ -58,21 +60,16 @@ const CreatePRO = () => {
   const { setStatusValue } = UseCreateProContext();
   const navigate = useNavigate();
 
-  const onRowClick = (e) => {
-    const clickedKey = e.data ? e.data.Task_ID : null;
-    setClickedRowKey(clickedKey);
-  };
-
   const handlePopupIconClick = () => {
     const selectedRows = dataGrid.instance.getSelectedRowsData();
     if (selectedRows.length === 1) {
       const selectedRow = selectedRows[0];
       if (selectedRow.Task_Status === "Completed") {
         setStatusValue("completed");
-        navigate("/create-pro/Initiate-pro");
+        navigate("/create-pro/Status");
       } else if (selectedRow.Task_ID === 4) {
         setStatusValue("pending");
-        navigate("/create-pro/Initiate-pro");
+        navigate("/create-pro/Status");
       }
     }
   };
@@ -133,7 +130,7 @@ const CreatePRO = () => {
       <div className="content-block dx-card">
         <div className="data-grid-container data-grid">
           <DataGrid
-            className={"dx-card wide-card"}
+            className="on-hover-data"
             dataSource={dataSource}
             showBorders={false}
             columnAutoWidth={true}
@@ -146,7 +143,7 @@ const CreatePRO = () => {
             }}
             selectedRowKeys={selectedRowKeys}
             onSelectionChanged={onSelectionChanged}
-            onSelectedRowKeysChange={onRowClick}
+            hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
             <Pager
@@ -159,20 +156,20 @@ const CreatePRO = () => {
             />
             <SearchPanel visible={!selectedRowKeys.length} width={300} />
             <ColumnChooser enabled={!selectedRowKeys.length} />
-            <Column
-              width={50}
-              cellRender={(data) => (
-                <div className="custom-cell">
-                  {selectedRowKeys.includes(data.data.Task_ID) && (
-                    <Button icon="background" onClick={handlePopupIconClick} />
-                  )}
-                </div>
-              )}
-            />
+
             <Column
               dataField={"Task_Subject"}
-              width={190}
+              width={300}
               caption={"Subject"}
+            />
+            <Column
+              className="grid-btn"
+              width={100}
+              cellRender={() => (
+                <Button onClick={handlePopupIconClick}>
+                  <LaunchSharpIcon style={{ color: "#525252" }} />
+                </Button>
+              )}
             />
             <Column dataField={"Task_Status"} caption={"Status"} />
             <Column dataField={"Task_Priority"} caption={"Priority"}>
@@ -197,7 +194,6 @@ const CreatePRO = () => {
               caption={"Due Date"}
               dataType={"date"}
             />
-
             <Toolbar className="Toolbar-Item">
               <Item location="before">
                 <div className="informer">
@@ -207,7 +203,6 @@ const CreatePRO = () => {
                 </div>
               </Item>
               <Item name="searchPanel" />
-
               <Item location="after">
                 <SelectBox
                   ref={(ref) => (selectBoxMonth = ref)}

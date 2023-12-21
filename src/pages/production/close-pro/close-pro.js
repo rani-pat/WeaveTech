@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   HeaderText,
   SubText,
-  PopupHeaderText,
-  PopupSubText,
-} from "../../../../components/typographyText/TypograghyText";
-import "../create_pro.scss";
+} from "../../../components/typographyText/TypograghyText";
 import {
   Button as NormalButton,
   Button,
@@ -14,13 +11,8 @@ import {
   SelectBox,
   Popup,
 } from "devextreme-react";
-import { Button as TextBoxButton } from "devextreme-react/text-box";
-import { PopupIcon, DeleteIcon } from "../../../../assets";
-import Breadcrumbs from "../../../../components/Breadcrumbs/breadcrumbs";
-import { navigation } from "../../../../app-navigation";
-import routes from "../../../../app-routes";
-import ProjectPopup from "./project-popup";
-import "devextreme/data/odata/store";
+import { useNavigate } from "react-router-dom";
+import { navigation } from "../../../app-navigation";
 import DataGrid, {
   Column,
   Lookup,
@@ -29,12 +21,14 @@ import DataGrid, {
   ColumnChooser,
   Toolbar,
   Item,
-  Editing,
-  Scrolling,
+  Selection,
+  Pager,
 } from "devextreme-react/data-grid";
-import { UseCreateProContext } from "../../../../contexts/createPro";
+import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
+import { PopupIcon } from "../../../assets";
+import { Button as TextBoxButton } from "devextreme-react/text-box";
 
-const IntiatePRO = () => {
+const ClosePro = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -61,38 +55,32 @@ const IntiatePRO = () => {
     { name: "Low", value: 1 },
   ];
 
-  const { status, setstatus } = UseCreateProContext();
-
+  const [filterStatus, setFilterStatus] = useState("All");
   const [isExpanded, setIsExpanded] = useState(false);
-  const [ProjectPopupVisible, setProjectPopupVisible] = useState(null);
-  const [filterStatus, setFilterStatus] = useState();
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [selectedRowCount, setSelectedRowCount] = useState(0);
-
-  const onSelectionChanged = ({ selectedRowKeys, selectedRowsData }) => {
-    console.log("onSelectionChanged", selectedRowsData);
-    setSelectedRowKeys(selectedRowKeys);
-    setSelectedRowCount(selectedRowKeys.length);
-  };
-
+  const dataGridRef = useRef();
+  const navigate = useNavigate();
   const handleToggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
-  const handleCancelProjectPopup = () => {
-    setProjectPopupVisible(false);
-  };
-  const handleOpenPopup = () => {
-    setIsPopupVisible(true);
-  };
-  const handleClosePopup = () => {
-    setIsPopupVisible(false);
-  };
   const NewItemsOptions = {
     icon: PopupIcon,
-    onClick: () => setProjectPopupVisible(true),
+    // onClick: () => setProjectPopupVisible(true),
   };
+  let selectBoxMonth;
+  let selectBoxCreatedPro;
+  const monthItem = [
+    { value: "All", text: "Yesterday" },
+    { value: "Today's", text: "Today's" },
+    { value: "Last Week", text: "Last Week" },
+    { value: "This Month", text: "This Month" },
+  ];
+  const allCreatedpro = [
+    { value: "All", text: "All Created Production" },
+    { value: "Pending Production", text: "Pending Production" },
+    { value: "Approve Production", text: "Approve Production" },
+    { value: "Reject Production", text: "Reject Production" },
+  ];
   let dataGrid;
   let selectBoxType;
   let selectBoxStatus;
@@ -115,32 +103,11 @@ const IntiatePRO = () => {
 
   return (
     <>
-      <Popup
-        visible={ProjectPopupVisible}
-        onHiding={handleCancelProjectPopup}
-        height={window.innerHeight - 200}
-        showTitle={false}
-        className="initate-popup-css"
-      >
-        <ProjectPopup
-          handleCancel={handleCancelProjectPopup}
-          title="List of Bill of Materials"
-          caption="Choose the product you want to produce "
-        />
-      </Popup>
-      <Breadcrumbs navigation={navigation} routes={routes} />
+      <Breadcrumbs navigation={navigation} />
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"Initiate New Production Order"} />
-          </div>
-          <div className="title-section-btn">
-            <NormalButton
-              text="For Verification"
-              height={44}
-              width={144}
-              type="default"
-            />
+            <HeaderText text={"Close Production Order"} />
           </div>
         </div>
       </div>
@@ -188,12 +155,6 @@ const IntiatePRO = () => {
             height={56}
             showClearButton={true}
           />
-          <TextBox
-            label="Planned Qty"
-            placeholder="Planned Qty"
-            height={56}
-            showClearButton={true}
-          />
         </div>
       </div>
       <div className="content-block dx-card responsive-paddings">
@@ -209,72 +170,17 @@ const IntiatePRO = () => {
           <>
             <div className="additional-information">
               <TextBox
+                label="Planned Qty"
+                placeholder="Planned Qty"
+                height={56}
+                showClearButton={true}
+              />
+              <TextBox
                 label="UOM"
                 placeholder="UOM"
                 height={56}
                 showClearButton={true}
               />
-              <DateBox
-                label="Start Date"
-                height={56}
-                displayFormat="yyyy-MM-dd"
-                // placeholder="Start Date"
-                stylingMode="outlined"
-                showClearButton={true}
-              />
-              <DateBox
-                label="Due Date"
-                height={56}
-                displayFormat="yyyy-MM-dd"
-                // placeholder="Due Date"
-                stylingMode="outlined"
-                showClearButton={true}
-              />
-              <DateBox
-                label="Order Date"
-                height={56}
-                displayFormat="yyyy-MM-dd"
-                // placeholder="Order Date"
-                stylingMode="outlined"
-                showClearButton={true}
-              />
-
-              <SelectBox
-                ref={(ref) => (selectBoxSeries = ref)}
-                value={filterStatus}
-                label="Series"
-                placeholder="Input"
-                height={56}
-                showClearButton={true}
-                items={Series}
-                valueExpr="value"
-                displayExpr="text"
-              />
-              <TextBox
-                label="Doc Number"
-                placeholder="Input"
-                height={56}
-                showClearButton={true}
-              />
-            </div>
-
-            <div className="additional-information">
-              <TextBox
-                // value={filterStatus}
-                // onValueChanged={handleFilterChange}
-                label="Distribution Rule"
-                placeholder="Input"
-                height={56}
-              >
-                <TextBoxButton
-                  name="popupSearch"
-                  location="after"
-                  options={NewItemsOptions}
-                  height={44}
-                  width={44}
-                  className="popup-icon"
-                />
-              </TextBox>
               <TextBox
                 // value={filterStatus}
                 // onValueChanged={handleFilterChange}
@@ -291,6 +197,69 @@ const IntiatePRO = () => {
                   className="popup-icon"
                 />
               </TextBox>
+
+              <SelectBox
+                ref={(ref) => (selectBoxSeries = ref)}
+                value={filterStatus}
+                label="Series"
+                placeholder="Input"
+                height={56}
+                showClearButton={true}
+                items={Series}
+                valueExpr="value"
+                displayExpr="text"
+              />
+              <TextBox
+                // value={filterStatus}
+                // onValueChanged={handleFilterChange}
+                label="Doc Number"
+                placeholder="Input"
+                height={56}
+              >
+                <TextBoxButton
+                  name="popupSearch"
+                  location="after"
+                  options={NewItemsOptions}
+                  height={44}
+                  width={44}
+                  className="popup-icon"
+                />
+              </TextBox>
+              <TextBox
+                // value={filterStatus}
+                // onValueChanged={handleFilterChange}
+                label="Distribution Rule"
+                placeholder="Input"
+                height={56}
+              >
+                <TextBoxButton
+                  name="popupSearch"
+                  location="after"
+                  options={NewItemsOptions}
+                  height={44}
+                  width={44}
+                  className="popup-icon"
+                />
+              </TextBox>
+            </div>
+
+            <div className="additional-information">
+              <DateBox
+                label="Start Date"
+                height={56}
+                displayFormat="yyyy-MM-dd"
+                // placeholder="Start Date"
+                stylingMode="outlined"
+                showClearButton={true}
+              />
+              <DateBox
+                label="Due Date"
+                height={56}
+                displayFormat="yyyy-MM-dd"
+                // placeholder="Due Date"
+                stylingMode="outlined"
+                showClearButton={true}
+              />
               <TextBox
                 // value={filterStatus}
                 // onValueChanged={handleFilterChange}
@@ -307,10 +276,18 @@ const IntiatePRO = () => {
                   className="popup-icon"
                 />
               </TextBox>
+              <DateBox
+                label="Order Date"
+                height={56}
+                displayFormat="yyyy-MM-dd"
+                // placeholder="Order Date"
+                stylingMode="outlined"
+                showClearButton={true}
+              />
               <TextBox
                 // value={filterStatus}
                 // onValueChanged={handleFilterChange}
-                label="Customer"
+                label="Linked To"
                 placeholder="Input"
                 height={56}
               >
@@ -324,65 +301,52 @@ const IntiatePRO = () => {
                 />
               </TextBox>
 
-              <SelectBox
-                label="Shift"
-                ref={(ref) => (selectBoxShift = ref)}
-                value={filterStatus}
-                height={56}
-                showClearButton={true}
-                items={Shift}
-                valueExpr="value"
-                displayExpr="text"
-              />
               <TextBox
-                label="Actual Weight"
-                placeholder="Actual Weight"
+                // value={filterStatus}
+                // onValueChanged={handleFilterChange}
+                label="Linked Order"
+                placeholder="Input"
                 height={56}
-                showClearButton={true}
-              />
+              >
+                <TextBoxButton
+                  name="popupSearch"
+                  location="after"
+                  options={NewItemsOptions}
+                  height={44}
+                  width={44}
+                  className="popup-icon"
+                />
+              </TextBox>
             </div>
           </>
         )}
       </div>
       <div className="content-block dx-card">
-        <div className="data-grid-container data-grid">
+        <div className="data-grid-container data-grid verify-pro-datagrid">
           <DataGrid
-            className="on-hover-data"
             dataSource={dataSource}
             showBorders={false}
-            // columnAutoWidth={true}
+            columnAutoWidth={true}
             columnHidingEnabled={true}
-            selection={{
-              mode: "multiple",
-            }}
-            ref={(ref) => {
-              dataGrid = ref;
-            }}
-            selectedRowKeys={selectedRowKeys}
-            onSelectionChanged={onSelectionChanged}
+            ref={dataGridRef}
             hoverStateEnabled={true}
-            columnMinWidth={100}
           >
-            <Editing
-              allowDeleting={true}
-              allowUpdating={true}
-              useIcons={true}
-            />
-            <Scrolling columnRenderingMode="virtual"></Scrolling>
             <Paging defaultPageSize={10} />
-            <SearchPanel visible={!selectedRowKeys.length} width={300} />
-            <ColumnChooser enabled={!selectedRowKeys.length} />
+            <Pager
+              // showInfo={true}
+              showNavigationButtons={true}
+              allowedPageSizes={[10, 20, 30]}
+            />
+            <Selection mode="multiple" />
+            <SearchPanel visible={true} width={300} />
+            <ColumnChooser enabled={true} />
+
             <Column
               dataField={"Task_Subject"}
               width={300}
               caption={"Subject"}
             />
-            <Column type="buttons">
-              <Button name="edit" />
-              <Button name="delete" />
-            </Column>
             <Column dataField={"Task_Status"} caption={"Status"} />
-
             <Column dataField={"Task_Priority"} caption={"Priority"}>
               <Lookup
                 dataSource={priorities}
@@ -405,125 +369,44 @@ const IntiatePRO = () => {
               caption={"Due Date"}
               dataType={"date"}
             />
-            <Column
-              dataField={"Task_Due_Date"}
-              caption={"Due Date"}
-              dataType={"date"}
-            />
-            <Column
-              dataField={"Task_Due_Date"}
-              caption={"Due Date"}
-              dataType={"date"}
-            />
-            <Column
-              dataField={"Task_Due_Date"}
-              caption={"Due Date"}
-              dataType={"date"}
-            />
+
             <Toolbar className="Toolbar-Item">
               <Item location="before">
                 <div className="informer">
-                  <SubText
-                    text={`All PRO’s (${selectedRowCount} item selected)`}
-                  />
+                  <SubText text={"All PRO’s"} />
                 </div>
               </Item>
-
               <Item name="searchPanel" />
 
               <Item location="after">
-                <TextBox
-                  placeholder="Add New Item"
-                  width={165}
-                  visible={!selectedRowKeys.length}
+                <SelectBox
+                  ref={(ref) => (selectBoxMonth = ref)}
+                  value={filterStatus}
+                  width={200}
                   className="selectbox-left"
-                >
-                  <TextBoxButton
-                    name="popupSearch"
-                    location="after"
-                    options={NewItemsOptions}
-                    height={44}
-                    className="popup-icon"
-                  />
-                </TextBox>
+                  items={monthItem}
+                  valueExpr="value"
+                  displayExpr="text"
+                />
+              </Item>
+              <Item location="after">
+                <SelectBox
+                  ref={(ref) => (selectBoxCreatedPro = ref)}
+                  value={filterStatus}
+                  width={200}
+                  className="selectbox-right"
+                  items={allCreatedpro}
+                  valueExpr="value"
+                  displayExpr="text"
+                />
               </Item>
               <Item name="columnChooserButton" />
-              <Item location="after">
-                <NormalButton
-                  text="Cancel"
-                  type="normal"
-                  stylingMode="text"
-                  visible={selectedRowKeys.length > 0}
-                />
-              </Item>
-              <Item location="after">
-                <Button
-                  visible={selectedRowKeys.length > 0}
-                  text="Delete"
-                  type="default"
-                  stylingMode="text"
-                  onClick={handleOpenPopup}
-                />
-              </Item>
             </Toolbar>
           </DataGrid>
         </div>
       </div>
-      <Popup
-        visible={isPopupVisible}
-        onHiding={handleClosePopup}
-        width={480}
-        height={240}
-        showCloseButton={false}
-        dragEnabled={false}
-        showTitle={false}
-      >
-        <div className="release-popup-main">
-          <div className="popup-back-btn">
-            <Button icon="trash" />
-          </div>
-          <div className="popup-close-btn">
-            <Button icon="close" onClick={handleClosePopup} />
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "5px",
-            marginTop: "20px",
-          }}
-        >
-          <PopupHeaderText text={"Are you sure you want to delete?"} />
-          <PopupSubText text={"Do you want to discard changes and go back? "} />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "10px",
-            marginTop: "24px",
-          }}
-        >
-          <Button
-            text="No"
-            width={216}
-            height={44}
-            onClick={handleClosePopup}
-            className="cancelQcBtn"
-          />
-          <Button
-            text="Yes"
-            type="default"
-            width={216}
-            height={44}
-            // onClick={handleInitiateClick}
-            onClick={handleClosePopup}
-            className="OkQcBtn"
-          />
-        </div>
-      </Popup>
     </>
   );
 };
-export default IntiatePRO;
+
+export default ClosePro;

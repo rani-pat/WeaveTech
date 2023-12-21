@@ -7856,12 +7856,13 @@
   top: 0;
   left: -4px;
 }
+
 .dx-swatch-additional .dx-treeview-toggle-item-visibility::before {
   content: "\f04e";
   position: absolute;
   display: block;
   width: 22px;
-  top: 50%;
+  top: 70%;
   margin-top: -11px;
   left: 50%;
   margin-left: -11px;
@@ -7878,7 +7879,7 @@
   position: absolute;
   display: block;
   width: 22px;
-  top: 50%;
+  top: 70%;
   margin-top: -11px;
   left: 50%;
   margin-left: -11px;

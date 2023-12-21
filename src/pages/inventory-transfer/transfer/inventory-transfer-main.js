@@ -24,7 +24,7 @@ import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
 import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
 
-const VerifyReceiptPROMain = () => {
+const InventoryTransferMain = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -58,23 +58,25 @@ const VerifyReceiptPROMain = () => {
   const navigate = useNavigate();
   const { setStatusValue } = UseVerifyIssueProContext();
 
+  const handleInitiateClick = () => {
+    navigate("/inventory-transfer/Generate-inventory-transfer");
+  };
   const handleIconClick = () => {
     const selectedRows = dataGridRef.current.instance.getSelectedRowsData();
     if (selectedRows.length === 1) {
       const selectedRow = selectedRows[0];
       if (selectedRow.Task_Status === "Completed") {
         setStatusValue("completed");
-        navigate("/verify-receipt/Verify-receipt-pro");
+        navigate("/inventory-transfer/Status");
       } else if (selectedRow.Task_ID === 4) {
         setStatusValue("pending");
-        navigate("/verify-receipt/Verify-receipt-pro");
+        navigate("/inventory-transfer/Status");
       }
     }
   };
 
   const handleSelectionChanged = (e) => {
     const selectedKeys = e.selectedRowKeys;
-
     if (dataGridRef.current && dataGridRef.current.instance) {
       if (selectedKeys.length > 1) {
         const value = dataGridRef.current.instance.selectRows(
@@ -97,10 +99,10 @@ const VerifyReceiptPROMain = () => {
     { value: "This Month", text: "This Month" },
   ];
   const allCreatedpro = [
-    { value: "All", text: "All Created Production" },
-    { value: "Pending Production", text: "Pending Production" },
-    { value: "Approve Production", text: "Approve Production" },
-    { value: "Reject Production", text: "Reject Production" },
+    { value: "All", text: "All Transfer" },
+    { value: "Pending Production", text: "Approve Transfer" },
+    { value: "Approve Production", text: "Reject Transfer" },
+    { value: "Reject Production", text: "Pending Transfer" },
   ];
   let dataGrid;
 
@@ -110,7 +112,17 @@ const VerifyReceiptPROMain = () => {
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"List of Receipt Production Order"} />
+            <HeaderText text={"Inventory Transfer"} />
+          </div>
+          <div className="title-section-btn">
+            <Button
+              text="New Transfer"
+              type="default"
+              icon="add"
+              height={44}
+              width={144}
+              onClick={handleInitiateClick}
+            />
           </div>
         </div>
       </div>
@@ -125,8 +137,8 @@ const VerifyReceiptPROMain = () => {
       <div className="content-block dx-card">
         <div className="data-grid-container data-grid verify-pro-datagrid">
           <DataGrid
-            className="on-hover-data"
             dataSource={dataSource}
+            className="on-hover-data"
             showBorders={false}
             columnAutoWidth={true}
             columnHidingEnabled={true}
@@ -184,7 +196,7 @@ const VerifyReceiptPROMain = () => {
             <Toolbar className="Toolbar-Item">
               <Item location="before">
                 <div className="informer">
-                  <SubText text={"All PRO’s"} />
+                  <SubText text={"All Transfer"} />
                 </div>
               </Item>
               <Item name="searchPanel" />
@@ -220,4 +232,4 @@ const VerifyReceiptPROMain = () => {
   );
 };
 
-export default VerifyReceiptPROMain;
+export default InventoryTransferMain;

@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import {
   HeaderText,
   SubText,
-  PopupHeaderText,
-  PopupSubText,
 } from "../../../components/typographyText/TypograghyText";
-// import "./verify_pro.scss";
 import {
   Button as NormalButton,
   Button,
@@ -31,9 +28,9 @@ import DataGrid, {
   Editing,
   Selection,
 } from "devextreme-react/data-grid";
-import { UseIssueProContext } from "../../../contexts/issuePro";
+import "./transfer.scss";
 
-const GenerateIssue = () => {
+const GenerateInventoryTransfer = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -61,7 +58,6 @@ const GenerateIssue = () => {
   ];
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [popupType, setPopupType] = useState("");
-  const { status, setstatus } = UseIssueProContext();
 
   const NewItemsOptions = {
     icon: PopupIcon,
@@ -83,7 +79,7 @@ const GenerateIssue = () => {
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"Generate an Issue for the Production Order"} />
+            <HeaderText text={"Generate an Inventory Transfer"} />
           </div>
           <div className="title-section-btn">
             <NormalButton
@@ -96,14 +92,14 @@ const GenerateIssue = () => {
         </div>
       </div>
       <div className="content-block dx-card responsive-paddings">
-        <div className="initiate-inputs">
+        <div className="transfer-inputs">
           <SelectBox
             label="Period Indicator"
             height={56}
             showClearButton={true}
           />
           <SelectBox label="Series" height={56} showClearButton={true} />
-          <TextBox label="Production Number" placeholder="Input" height={56}>
+          <TextBox label="From Warehouse" placeholder="Input" height={56}>
             <TextBoxButton
               name="popupSearch"
               location="after"
@@ -113,6 +109,18 @@ const GenerateIssue = () => {
               className="popup-icon"
             />
           </TextBox>
+          <TextBox label="To Warehouse" placeholder="Input" height={56}>
+            <TextBoxButton
+              name="popupSearch"
+              location="after"
+              options={NewItemsOptions}
+              height={44}
+              width={44}
+              className="popup-icon"
+            />
+          </TextBox>
+        </div>
+        <div className="transfer-inputs" style={{ marginTop: "32px" }}>
           <DateBox
             label="Posting Date"
             height={56}
@@ -120,12 +128,14 @@ const GenerateIssue = () => {
             stylingMode="outlined"
             showClearButton={true}
           />
-          <TextBox
-            label="Reference Number"
-            placeholder="Reference Number..."
+          <DateBox
+            label="Doc Date"
             height={56}
+            displayFormat="yyyy-MM-dd"
+            stylingMode="outlined"
             showClearButton={true}
           />
+          <SelectBox label="Price List" height={56} showClearButton={true} />
         </div>
       </div>
 
@@ -187,12 +197,25 @@ const GenerateIssue = () => {
             <Toolbar className="Toolbar-Item">
               <Item location="before">
                 <div className="informer">
-                  <SubText text={"All the items"} />
+                  <SubText text={"All the transfer"} />
                 </div>
               </Item>
-
               <Item name="searchPanel" />
-
+              <Item location="after">
+                <TextBox
+                  placeholder="Add New Item"
+                  width={165}
+                  className="selectbox-left"
+                >
+                  <TextBoxButton
+                    name="popupSearch"
+                    location="after"
+                    options={NewItemsOptions}
+                    height={44}
+                    className="popup-icon"
+                  />
+                </TextBox>
+              </Item>
               <Item name="columnChooserButton" />
             </Toolbar>
           </DataGrid>
@@ -201,4 +224,4 @@ const GenerateIssue = () => {
     </>
   );
 };
-export default GenerateIssue;
+export default GenerateInventoryTransfer;

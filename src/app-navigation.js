@@ -53,4 +53,21 @@ export const navigation = [
       },
     ],
   },
+  {
+    text: "Inventory Transfer",
+    icon: "toolbox",
+    path: "/transfer",
+    items: [
+      {
+        text: "Transfer",
+        path: "/inventory-transfer",
+        icon: "unlock",
+      },
+      {
+        text: "Verify Transfer",
+        path: "/verify-transfer",
+        icon: "checklist",
+      },
+    ],
+  },
 ];

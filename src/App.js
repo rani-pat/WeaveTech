@@ -16,6 +16,7 @@ import { VerifyProProvider } from "./contexts/verifyPro";
 import { IssueProProvider } from "./contexts/issuePro";
 import { VerifyIssueProProvider } from "./contexts/verifyIssuePro";
 import { ReceiptProProvider } from "./contexts/receipt-pro";
+import { InventoryTransferMain } from "./pages";
 
 function App() {
   const { user, loading } = useAuth();

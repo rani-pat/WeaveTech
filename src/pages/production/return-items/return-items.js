@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   HeaderText,
   SubText,
-  PopupHeaderText,
-  PopupSubText,
 } from "../../../components/typographyText/TypograghyText";
-// import "./verify_pro.scss";
 import {
   Button as NormalButton,
   Button,
@@ -14,12 +11,8 @@ import {
   SelectBox,
   Popup,
 } from "devextreme-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button as TextBoxButton } from "devextreme-react/text-box";
-import { PopupIcon } from "../../../assets";
-import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
+import { useNavigate } from "react-router-dom";
 import { navigation } from "../../../app-navigation";
-import routes from "../../../app-routes";
 import DataGrid, {
   Column,
   Lookup,
@@ -28,12 +21,15 @@ import DataGrid, {
   ColumnChooser,
   Toolbar,
   Item,
-  Editing,
   Selection,
+  Pager,
+  Editing,
 } from "devextreme-react/data-grid";
-import { UseIssueProContext } from "../../../contexts/issuePro";
+import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
+import { PopupIcon } from "../../../assets";
+import { Button as TextBoxButton } from "devextreme-react/text-box";
 
-const GenerateIssue = () => {
+const ReturnItems = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -59,51 +55,101 @@ const GenerateIssue = () => {
     { name: "Normal", value: 2 },
     { name: "Low", value: 1 },
   ];
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [popupType, setPopupType] = useState("");
-  const { status, setstatus } = UseIssueProContext();
 
+  const [filterStatus, setFilterStatus] = useState("All");
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const dataGridRef = useRef();
+  const navigate = useNavigate();
+  const handleToggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
   const NewItemsOptions = {
     icon: PopupIcon,
+    // onClick: () => setProjectPopupVisible(true),
   };
+  let selectBoxMonth;
+  let selectBoxCreatedPro;
+  const monthItem = [
+    { value: "All", text: "Yesterday" },
+    { value: "Today's", text: "Today's" },
+    { value: "Last Week", text: "Last Week" },
+    { value: "This Month", text: "This Month" },
+  ];
+  const allCreatedpro = [
+    { value: "All", text: "All Created Production" },
+    { value: "Pending Production", text: "Pending Production" },
+    { value: "Approve Production", text: "Approve Production" },
+    { value: "Reject Production", text: "Reject Production" },
+  ];
   let dataGrid;
+  let selectBoxType;
+  let selectBoxSeries;
 
-  const handleOpenPopup = (type) => {
-    setPopupType(type);
-    setIsPopupVisible(true);
-  };
-
-  const handleClosePopup = () => {
-    setIsPopupVisible(false);
-  };
+  const Type = [
+    { value: "Standard", text: "Standard" },
+    { value: "Today's", text: "Special" },
+  ];
+  const Series = [
+    { value: "rt3445", text: "rt3445" },
+    { value: "rt4556", text: "rt4556" },
+  ];
 
   return (
     <>
-      <Breadcrumbs navigation={navigation} routes={routes} />
+      <Breadcrumbs navigation={navigation} />
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"Generate an Issue for the Production Order"} />
-          </div>
-          <div className="title-section-btn">
-            <NormalButton
-              text="For Verification"
-              height={44}
-              width={144}
-              type="default"
-            />
+            <HeaderText text={"Close Production Order"} />
           </div>
         </div>
       </div>
       <div className="content-block dx-card responsive-paddings">
         <div className="initiate-inputs">
           <SelectBox
+            ref={(ref) => (selectBoxType = ref)}
+            value={filterStatus}
             label="Period Indicator"
             height={56}
             showClearButton={true}
+            items={Type}
+            valueExpr="value"
+            displayExpr="text"
           />
-          <SelectBox label="Series" height={56} showClearButton={true} />
-          <TextBox label="Production Number" placeholder="Input" height={56}>
+          <SelectBox
+            ref={(ref) => (selectBoxSeries = ref)}
+            value={filterStatus}
+            label="Series"
+            height={56}
+            showClearButton={true}
+            items={Series}
+            valueExpr="value"
+            displayExpr="text"
+          />
+          <TextBox
+            // value={filterStatus}
+            // onValueChanged={handleFilterChange}
+            label="Production Number"
+            placeholder="Input"
+            height={56}
+          >
+            <TextBoxButton
+              name="popupSearch"
+              location="after"
+              options={NewItemsOptions}
+              height={44}
+              width={44}
+              className="popup-icon"
+            />
+          </TextBox>
+          <TextBox
+            // value={filterStatus}
+            // onValueChanged={handleFilterChange}
+            label="Reference Number"
+            placeholder="Input"
+            height={56}
+          >
             <TextBoxButton
               name="popupSearch"
               location="after"
@@ -117,33 +163,30 @@ const GenerateIssue = () => {
             label="Posting Date"
             height={56}
             displayFormat="yyyy-MM-dd"
+            // placeholder="Due Date"
             stylingMode="outlined"
-            showClearButton={true}
-          />
-          <TextBox
-            label="Reference Number"
-            placeholder="Reference Number..."
-            height={56}
             showClearButton={true}
           />
         </div>
       </div>
-
       <div className="content-block dx-card">
-        <div className="data-grid-container data-grid">
+        <div className="data-grid-container data-grid verify-pro-datagrid">
           <DataGrid
             className="on-hover-data"
             dataSource={dataSource}
             showBorders={false}
             columnAutoWidth={true}
             columnHidingEnabled={true}
-            ref={(ref) => {
-              dataGrid = ref;
-            }}
+            ref={dataGridRef}
             hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
-            <Selection mode={"multiple"} />
+            <Pager
+              // showInfo={true}
+              showNavigationButtons={true}
+              allowedPageSizes={[10, 20, 30]}
+            />
+            <Selection mode="multiple" />
             <Editing
               allowDeleting={true}
               allowUpdating={true}
@@ -151,7 +194,6 @@ const GenerateIssue = () => {
             />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
-
             <Column
               dataField={"Task_Subject"}
               width={300}
@@ -184,15 +226,37 @@ const GenerateIssue = () => {
               caption={"Due Date"}
               dataType={"date"}
             />
+
             <Toolbar className="Toolbar-Item">
               <Item location="before">
                 <div className="informer">
-                  <SubText text={"All the items"} />
+                  <SubText text={"All PRO’s"} />
                 </div>
               </Item>
-
               <Item name="searchPanel" />
 
+              <Item location="after">
+                <SelectBox
+                  ref={(ref) => (selectBoxMonth = ref)}
+                  value={filterStatus}
+                  width={200}
+                  className="selectbox-left"
+                  items={monthItem}
+                  valueExpr="value"
+                  displayExpr="text"
+                />
+              </Item>
+              <Item location="after">
+                <SelectBox
+                  ref={(ref) => (selectBoxCreatedPro = ref)}
+                  value={filterStatus}
+                  width={200}
+                  className="selectbox-right"
+                  items={allCreatedpro}
+                  valueExpr="value"
+                  displayExpr="text"
+                />
+              </Item>
               <Item name="columnChooserButton" />
             </Toolbar>
           </DataGrid>
@@ -201,4 +265,5 @@ const GenerateIssue = () => {
     </>
   );
 };
-export default GenerateIssue;
+
+export default ReturnItems;

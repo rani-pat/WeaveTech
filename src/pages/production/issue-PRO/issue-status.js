@@ -4,8 +4,7 @@ import {
   SubText,
   PopupHeaderText,
   PopupSubText,
-} from "../../../../components/typographyText/TypograghyText";
-import "../create_pro.scss";
+} from "../../../components/typographyText/TypograghyText";
 import {
   Button as NormalButton,
   Button,
@@ -14,12 +13,13 @@ import {
   SelectBox,
   Popup,
 } from "devextreme-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button as TextBoxButton } from "devextreme-react/text-box";
-import { PopupIcon, DeleteIcon } from "../../../../assets";
-import Breadcrumbs from "../../../../components/Breadcrumbs/breadcrumbs";
-import { navigation } from "../../../../app-navigation";
-import routes from "../../../../app-routes";
-import ProjectPopup from "./project-popup";
+import { PopupIcon, DeleteIcon } from "../../../assets";
+import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
+import { navigation } from "../../../app-navigation";
+import routes from "../../../app-routes";
+// import ProjectPopup from ".././project-popup";
 import "devextreme/data/odata/store";
 import DataGrid, {
   Column,
@@ -32,9 +32,10 @@ import DataGrid, {
   Editing,
   Scrolling,
 } from "devextreme-react/data-grid";
-import { UseCreateProContext } from "../../../../contexts/createPro";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { UseIssueProContext } from "../../../contexts/issuePro";
 
-const IntiatePRO = () => {
+const IssueStatus = () => {
   const dataSource = {
     store: {
       type: "odata",
@@ -61,7 +62,7 @@ const IntiatePRO = () => {
     { name: "Low", value: 1 },
   ];
 
-  const { status, setstatus } = UseCreateProContext();
+  const { status, setstatus } = UseIssueProContext();
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [ProjectPopupVisible, setProjectPopupVisible] = useState(null);
@@ -122,24 +123,27 @@ const IntiatePRO = () => {
         showTitle={false}
         className="initate-popup-css"
       >
-        <ProjectPopup
+        {/* <ProjectPopup
           handleCancel={handleCancelProjectPopup}
           title="List of Bill of Materials"
           caption="Choose the product you want to produce "
-        />
+        /> */}
       </Popup>
       <Breadcrumbs navigation={navigation} routes={routes} />
       <div className="content-block dx-card responsive-paddings">
         <div className="navigation-header-create-pro">
           <div className="title-section">
-            <HeaderText text={"Initiate New Production Order"} />
+            <HeaderText text={"Production Order"} />
           </div>
+          <div>Status : {status}</div>
           <div className="title-section-btn">
             <NormalButton
               text="For Verification"
               height={44}
               width={144}
               type="default"
+              disabled={status === "completed"}
+              // className="btn-disable"
             />
           </div>
         </div>
@@ -200,9 +204,15 @@ const IntiatePRO = () => {
         <div className="expandable-text" onClick={handleToggleExpand}>
           Additional Information, make changes
           {isExpanded ? (
-            <Button icon="chevronup" style={{ marginLeft: "36px" }} />
+            <FontAwesomeIcon
+              icon={faChevronUp}
+              style={{ marginLeft: "25px" }}
+            />
           ) : (
-            <Button icon="chevrondown" style={{ marginLeft: "36px" }} />
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              style={{ marginLeft: "25px" }}
+            />
           )}
         </div>
         {isExpanded && (
@@ -377,7 +387,7 @@ const IntiatePRO = () => {
               width={300}
               caption={"Subject"}
             />
-            <Column type="buttons">
+            <Column type="buttons" width={50}>
               <Button name="edit" />
               <Button name="delete" />
             </Column>
@@ -526,4 +536,4 @@ const IntiatePRO = () => {
     </>
   );
 };
-export default IntiatePRO;
+export default IssueStatus;

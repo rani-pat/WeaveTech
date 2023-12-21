@@ -11,7 +11,6 @@ import {
   SelectBox,
   Popup,
 } from "devextreme-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button as TextBoxButton } from "devextreme-react/text-box";
 import { PopupIcon } from "../../../assets";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
@@ -28,7 +27,6 @@ import DataGrid, {
   Editing,
   Selection,
 } from "devextreme-react/data-grid";
-import { UseReceiptProContext } from "../../../contexts/receipt-pro";
 
 const GenearteReceiptPRO = () => {
   const dataSource = {
@@ -58,7 +56,6 @@ const GenearteReceiptPRO = () => {
   ];
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [popupType, setPopupType] = useState("");
-  const { status, setstatus } = UseReceiptProContext();
 
   const NewItemsOptions = {
     icon: PopupIcon,
@@ -81,7 +78,6 @@ const GenearteReceiptPRO = () => {
         <div className="navigation-header-create-pro">
           <div className="title-section">
             <HeaderText text={"Generate a Receipt for the Production Order"} />
-            <div>Status : {status}</div>
           </div>
           <div className="title-section-btn">
             <NormalButton
@@ -89,7 +85,6 @@ const GenearteReceiptPRO = () => {
               height={44}
               width={144}
               type="default"
-              disabled={status == "completed"}
             />
           </div>
         </div>
@@ -132,7 +127,7 @@ const GenearteReceiptPRO = () => {
       <div className="content-block dx-card">
         <div className="data-grid-container data-grid">
           <DataGrid
-            className={"dx-card wide-card"}
+            className="on-hover-data"
             dataSource={dataSource}
             showBorders={false}
             columnAutoWidth={true}
@@ -140,18 +135,26 @@ const GenearteReceiptPRO = () => {
             ref={(ref) => {
               dataGrid = ref;
             }}
+            hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
             <Selection mode={"multiple"} />
-
+            <Editing
+              allowDeleting={true}
+              allowUpdating={true}
+              useIcons={true}
+            />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
-
             <Column
               dataField={"Task_Subject"}
-              width={190}
+              width={300}
               caption={"Subject"}
             />
+            <Column type="buttons" width={100}>
+              <Button name="edit" />
+              <Button name="delete" />
+            </Column>
             <Column dataField={"Task_Status"} caption={"Status"} />
             <Column dataField={"Task_Priority"} caption={"Priority"}>
               <Lookup

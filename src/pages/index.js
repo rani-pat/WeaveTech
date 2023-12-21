@@ -11,3 +11,13 @@ export { default as ReceiptPROMain } from "./production/receipt-PRO/receipt-pro-
 export { default as GenearteReceiptPRO } from "./production/receipt-PRO/generate-receipt";
 export { default as VerifyReceiptPROMain } from "./production/verify-receipt/verify-receipt-pro-main";
 export { default as VerifyReceiptPRO } from "./production/verify-receipt/verify-receipt-initiate";
+export { default as InventoryTransferMain } from "./inventory-transfer/transfer/inventory-transfer-main";
+export { default as GenerateInventoryTransfer } from "./inventory-transfer/transfer/generate-transfer";
+export { default as VerifyTransferMain } from "./inventory-transfer/verify-transfer/verify-transfer-main";
+export { default as GenerateVerifyTransfer } from "./inventory-transfer/verify-transfer/verify-generate-transfer";
+export { default as CreateStatus } from "./production/create-PRO/create-status";
+export { default as IssueStatus } from "./production/issue-PRO/issue-status";
+export { default as ReceiptStatus } from "./production/receipt-PRO/receipt-status";
+export { default as InventoryTransferStatus } from "./inventory-transfer/transfer/transfer-issue";
+export { default as ClosePro } from "./production/close-pro/close-pro";
+export { default as ReturnItems } from "./production/return-items/return-items";

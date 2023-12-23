@@ -31,6 +31,7 @@ import DataGrid, {
   Item,
   Editing,
   Scrolling,
+  Pager,
 } from "devextreme-react/data-grid";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { UseIssueProContext } from "../../../contexts/issuePro";
@@ -380,6 +381,12 @@ const IssueStatus = () => {
             />
             <Scrolling columnRenderingMode="virtual"></Scrolling>
             <Paging defaultPageSize={10} />
+            <Pager
+              visible={true}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
+            />
             <SearchPanel visible={!selectedRowKeys.length} width={300} />
             <ColumnChooser enabled={!selectedRowKeys.length} />
             <Column
@@ -434,7 +441,7 @@ const IssueStatus = () => {
               <Item location="before">
                 <div className="informer">
                   <SubText
-                    text={`All PRO’s (${selectedRowCount} item selected)`}
+                    text={`All the Items (${selectedRowCount} item selected)`}
                   />
                 </div>
               </Item>

@@ -13270,22 +13270,21 @@
   background-color: transparent;
 }
 .dx-datagrid-headers {
-  
   -ms-touch-action: pinch-zoom;
   touch-action: pinch-zoom;
   font-family: Inter;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 21px; 
-letter-spacing: 0.28px;
-text-transform: uppercase;
-color: #525252;
-background-color: #fcfcfc;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 21px; 
+  letter-spacing: 0.28px;
+  text-transform: uppercase;
+  color: #525252;
+  background-color: #fcfcfc;
 }
 .dx-datagrid-headers .dx-datagrid-content {
-  margin-bottom: 17px;
-  
+  height: 60px;
+ 
 }
 .dx-datagrid-borders .dx-datagrid-headers .dx-datagrid-table {
   border-bottom-width: 1px;

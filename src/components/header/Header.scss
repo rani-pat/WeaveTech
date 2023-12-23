@@ -39,3 +39,84 @@
     padding: 3px;
   }
 }
+.dx-icon {
+  font-weight: 300;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+.header-toolbar {
+  .nav-icons {
+    .dx-item-content.dx-toolbar-item-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .dx-icon-bell {
+        font-size: 22px;
+        cursor: pointer;
+
+        &:hover {
+          animation: shake 0.5s ease-in-out;
+        }
+      }
+
+      @keyframes shake {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        25% {
+          transform: rotate(-10deg);
+        }
+
+        50% {
+          transform: rotate(10deg);
+        }
+
+        75% {
+          transform: rotate(-10deg);
+        }
+
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+    }
+
+    .material-symbols-outlined.search-icon {
+      font-size: 20px;
+      margin-left: 1rem;
+    }
+
+    .notification {
+      position: relative;
+
+      .notify-badge {
+        border-radius: 20px;
+        width: 12px;
+        height: 12px;
+        background-color: #4371b7;
+        // background-color: #ff0000;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        font-size: 8px;
+        line-height: 13px;
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        color: #fff;
+        font-weight: 700;
+        align-items: center;
+        text-align: center;
+      }
+    }
+  }
+}

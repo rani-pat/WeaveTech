@@ -3,7 +3,7 @@ import {
   HeaderText,
   SubText,
 } from "../../../components/typographyText/TypograghyText";
-import { Button as NormalButton, Button } from "devextreme-react";
+import { Button } from "devextreme-react";
 import Card from "../../../components/card/card";
 import { SVG1, SVG2, SVG3, SVG4 } from "../../../assets";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ import DataGrid, {
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
-import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
+import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined";
 
 const VerifyReceiptPROMain = () => {
   const dataSource = {
@@ -136,9 +136,10 @@ const VerifyReceiptPROMain = () => {
           >
             <Paging defaultPageSize={10} />
             <Pager
+              visible={true}
               // showInfo={true}
+              displayMode="compact"
               showNavigationButtons={true}
-              allowedPageSizes={[10, 20, 30]}
             />
             <Selection mode="multiple" />
             <SearchPanel visible={true} width={300} />
@@ -153,7 +154,7 @@ const VerifyReceiptPROMain = () => {
               width={100}
               cellRender={() => (
                 <Button onClick={handleIconClick}>
-                  <LaunchSharpIcon style={{ color: "#525252" }} />
+                  <ArrowOutwardOutlinedIcon style={{ color: "#525252" }} />
                 </Button>
               )}
             />

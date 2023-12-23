@@ -14,6 +14,12 @@ export default function AddItem({ menuMode }) {
   function navigateToIssueGenerate() {
     navigate("/issue-pro/Generate-issue");
   }
+  function navigateToReceiptGenerate() {
+    navigate("/receipt-pro/Generate-receipt");
+  }
+  function navigateToInventoryGenerate() {
+    navigate("/inventory-transfer/Generate-inventory-transfer");
+  }
   const menuItems = [
     {
       text: "Initiate Production Order",
@@ -28,12 +34,12 @@ export default function AddItem({ menuMode }) {
     {
       text: "Receipt against Production",
       icon: "add",
-      // onClick: navigateToProfile,
+      onClick: navigateToReceiptGenerate,
     },
     {
       text: "Inventory Transfer",
       icon: "add",
-      // onClick: navigateToProfile,
+      onClick: navigateToInventoryGenerate,
     },
   ];
 

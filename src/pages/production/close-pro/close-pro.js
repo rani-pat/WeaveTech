@@ -333,9 +333,10 @@ const ClosePro = () => {
           >
             <Paging defaultPageSize={10} />
             <Pager
+              visible={true}
               // showInfo={true}
+              displayMode="compact"
               showNavigationButtons={true}
-              allowedPageSizes={[10, 20, 30]}
             />
             <Selection mode="multiple" />
             <SearchPanel visible={true} width={300} />

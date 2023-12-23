@@ -31,7 +31,6 @@
           margin: 0 !important;
         }
       }
-      // ##
 
       // ## Arrow customization
       .dx-treeview-node {
@@ -106,8 +105,9 @@
 
 .search-box {
   position: relative;
-  width: 100%;
-  padding: 10px;
+  // width: 100%;
+  // padding: 10px;
+  margin: 20px 10px 10px 10px;
   border-bottom: 1px solid #fff;
 }
 
@@ -119,5 +119,15 @@
     transform: translateY(-50%);
     color: #fff;
     z-index: 1;
+  }
+}
+
+.search-icon {
+  margin: 10px 10px 0px 10px;
+}
+.search-icon {
+  .dx-widget.dx-button.dx-button-mode-contained.dx-button-normal.dx-button-has-icon {
+    background: none;
+    border: none;
   }
 }

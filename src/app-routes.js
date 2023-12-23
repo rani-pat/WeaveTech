@@ -35,7 +35,7 @@ const routes = [
     element: CreatePRO,
   },
   {
-    path: "/create-pro/Initiate-pro",
+    path: "/create-pro/Initiate-PRO",
     element: IntiatePRO,
   },
   {

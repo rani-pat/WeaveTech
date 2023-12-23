@@ -16,7 +16,7 @@ import { VerifyProProvider } from "./contexts/verifyPro";
 import { IssueProProvider } from "./contexts/issuePro";
 import { VerifyIssueProProvider } from "./contexts/verifyIssuePro";
 import { ReceiptProProvider } from "./contexts/receipt-pro";
-import { InventoryTransferMain } from "./pages";
+import { HeaderProvider } from "./contexts/headerContext";
 
 function App() {
   const { user, loading } = useAuth();
@@ -45,7 +45,9 @@ export default function Root() {
                 <VerifyIssueProProvider>
                   <ReceiptProProvider>
                     <div className={`app ${screenSizeClass}`}>
-                      <App />
+                      <HeaderProvider>
+                        <App />
+                      </HeaderProvider>
                     </div>
                   </ReceiptProProvider>
                 </VerifyIssueProProvider>

@@ -20,10 +20,12 @@ import DataGrid, {
   Item,
   Pager,
   Editing,
+  Scrolling,
 } from "devextreme-react/data-grid";
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
+import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined";
 
 const CreatePRO = () => {
   const dataSource = {
@@ -75,7 +77,7 @@ const CreatePRO = () => {
   };
 
   const handleInitiateClick = () => {
-    navigate("/create-pro/Initiate-pro");
+    navigate("/create-pro/Initiate-PRO");
   };
   const onSelectionChanged = ({ selectedRowKeys, selectedRowsData }) => {
     console.log("onSelectionChanged", selectedRowsData);
@@ -134,7 +136,8 @@ const CreatePRO = () => {
             dataSource={dataSource}
             showBorders={false}
             columnAutoWidth={true}
-            columnHidingEnabled={true}
+            // columnWidth={100}
+            // columnHidingEnabled={true}
             selection={{
               mode: "multiple",
             }}
@@ -145,14 +148,13 @@ const CreatePRO = () => {
             onSelectionChanged={onSelectionChanged}
             hoverStateEnabled={true}
           >
+            <Scrolling columnRenderingMode="virtual" />
             <Paging defaultPageSize={10} />
             <Pager
               visible={true}
-              // allowedPageSizes={allowedPageSizes}
-              // displayMode={displayMode}
-              // showPageSizeSelector={showPageSizeSelector}
-              // showInfo={showInfo}
-              // showNavigationButtons={showNavButtons}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
             />
             <SearchPanel visible={!selectedRowKeys.length} width={300} />
             <ColumnChooser enabled={!selectedRowKeys.length} />
@@ -161,18 +163,26 @@ const CreatePRO = () => {
               dataField={"Task_Subject"}
               width={300}
               caption={"Subject"}
+              fixed={true}
+              fixedPosition="left"
             />
             <Column
               className="grid-btn"
               width={100}
+              fixed={true}
+              fixedPosition="left"
               cellRender={() => (
                 <Button onClick={handlePopupIconClick}>
-                  <LaunchSharpIcon style={{ color: "#525252" }} />
+                  <ArrowOutwardOutlinedIcon style={{ color: "#525252" }} />
                 </Button>
               )}
             />
-            <Column dataField={"Task_Status"} caption={"Status"} />
-            <Column dataField={"Task_Priority"} caption={"Priority"}>
+            <Column dataField={"Task_Status"} caption={"Status"} width={300} />
+            <Column
+              dataField={"Task_Priority"}
+              caption={"Priority"}
+              width={300}
+            >
               <Lookup
                 dataSource={priorities}
                 valueExpr={"value"}
@@ -183,17 +193,21 @@ const CreatePRO = () => {
               dataField={"ResponsibleEmployee.Employee_Full_Name"}
               caption={"Assigned To"}
               allowSorting={false}
+              width={300}
             />
             <Column
               dataField={"Task_Start_Date"}
               caption={"Start Date"}
               dataType={"date"}
+              width={300}
             />
             <Column
               dataField={"Task_Due_Date"}
               caption={"Due Date"}
               dataType={"date"}
+              width={300}
             />
+
             <Toolbar className="Toolbar-Item">
               <Item location="before">
                 <div className="informer">

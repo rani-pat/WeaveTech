@@ -31,6 +31,7 @@ import DataGrid, {
   Item,
   Editing,
   Scrolling,
+  Pager,
 } from "devextreme-react/data-grid";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { UseReceiptProContext } from "../../../contexts/receipt-pro";
@@ -380,6 +381,12 @@ const ReceiptStatus = () => {
             />
             <Scrolling columnRenderingMode="virtual"></Scrolling>
             <Paging defaultPageSize={10} />
+            <Pager
+              visible={true}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
+            />
             <SearchPanel visible={!selectedRowKeys.length} width={300} />
             <ColumnChooser enabled={!selectedRowKeys.length} />
             <Column

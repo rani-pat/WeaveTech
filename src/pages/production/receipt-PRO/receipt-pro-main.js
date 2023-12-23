@@ -17,11 +17,13 @@ import DataGrid, {
   Toolbar,
   Item,
   Selection,
+  Pager,
 } from "devextreme-react/data-grid";
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import { UseReceiptProContext } from "../../../contexts/receipt-pro";
-import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
+// import ArrowOutwardOutlinedIcon from "@mui/icons-material/LaunchSharp";
+import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined";
 
 const ReceiptPROMain = () => {
   const dataSource = {
@@ -146,6 +148,12 @@ const ReceiptPROMain = () => {
             hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
+            <Pager
+              visible={true}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
+            />
             <Selection mode="multiple" />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
@@ -159,7 +167,7 @@ const ReceiptPROMain = () => {
               width={100}
               cellRender={() => (
                 <Button onClick={handleIconClick}>
-                  <LaunchSharpIcon style={{ color: "#525252" }} />
+                  <ArrowOutwardOutlinedIcon style={{ color: "#525252" }} />
                 </Button>
               )}
             />

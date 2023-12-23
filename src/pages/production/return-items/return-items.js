@@ -182,9 +182,10 @@ const ReturnItems = () => {
           >
             <Paging defaultPageSize={10} />
             <Pager
+              visible={true}
               // showInfo={true}
+              displayMode="compact"
               showNavigationButtons={true}
-              allowedPageSizes={[10, 20, 30]}
             />
             <Selection mode="multiple" />
             <Editing

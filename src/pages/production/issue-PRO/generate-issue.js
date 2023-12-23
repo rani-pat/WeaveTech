@@ -30,6 +30,7 @@ import DataGrid, {
   Item,
   Editing,
   Selection,
+  Pager,
 } from "devextreme-react/data-grid";
 import { UseIssueProContext } from "../../../contexts/issuePro";
 
@@ -143,6 +144,12 @@ const GenerateIssue = () => {
             hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
+            <Pager
+              visible={true}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
+            />
             <Selection mode={"multiple"} />
             <Editing
               allowDeleting={true}

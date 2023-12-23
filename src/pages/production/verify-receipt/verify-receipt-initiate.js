@@ -27,6 +27,7 @@ import DataGrid, {
   Item,
   Editing,
   Selection,
+  Pager,
 } from "devextreme-react/data-grid";
 import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
 
@@ -157,6 +158,12 @@ const VerifyReceiptPRO = () => {
             hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
+            <Pager
+              visible={true}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
+            />
             <Selection mode={"multiple"} />
             <Editing
               allowDeleting={true}

@@ -30,6 +30,7 @@ import DataGrid, {
   Toolbar,
   Item,
   Editing,
+  Pager,
 } from "devextreme-react/data-grid";
 import { UseVerifyProContext } from "../../../contexts/verifyPro";
 
@@ -349,11 +350,13 @@ const VerifyInitiatePRO = () => {
             hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
-            <Editing
-              allowDeleting={true}
-              allowUpdating={true}
-              useIcons={true}
+            <Pager
+              visible={true}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
             />
+
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
 
@@ -362,10 +365,7 @@ const VerifyInitiatePRO = () => {
               width={300}
               caption={"Subject"}
             />
-            <Column type="buttons" width={100}>
-              <Button name="edit" />
-              <Button name="delete" />
-            </Column>
+
             <Column dataField={"Task_Status"} caption={"Status"} />
             <Column dataField={"Task_Priority"} caption={"Priority"}>
               <Lookup

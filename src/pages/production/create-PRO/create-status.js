@@ -31,6 +31,7 @@ import DataGrid, {
   Item,
   Editing,
   Scrolling,
+  Pager,
 } from "devextreme-react/data-grid";
 import { UseCreateProContext } from "../../../contexts/createPro";
 
@@ -379,6 +380,12 @@ const CreateStatus = () => {
             />
             <Scrolling columnRenderingMode="virtual"></Scrolling>
             <Paging defaultPageSize={10} />
+            <Pager
+              visible={true}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
+            />
             <SearchPanel visible={!selectedRowKeys.length} width={300} />
             <ColumnChooser enabled={!selectedRowKeys.length} />
             <Column
@@ -433,7 +440,7 @@ const CreateStatus = () => {
               <Item location="before">
                 <div className="informer">
                   <SubText
-                    text={`All PRO’s (${selectedRowCount} item selected)`}
+                    text={`All the Items (${selectedRowCount} item selected)`}
                   />
                 </div>
               </Item>

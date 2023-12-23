@@ -20,12 +20,13 @@ import DataGrid, {
   Selection,
   Scrolling,
   Editing,
+  Pager,
 } from "devextreme-react/data-grid";
 import { SelectBox, Button, TextBox } from "devextreme-react";
 import "./verify_pro.scss";
 import { UseVerifyProContext } from "../../../contexts/verifyPro";
 import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
-
+import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined";
 const VerifyPRO = () => {
   const dataSource = {
     store: {
@@ -134,6 +135,12 @@ const VerifyPRO = () => {
             hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
+            <Pager
+              visible={true}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
+            />
             <Selection mode="multiple" />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
@@ -146,7 +153,7 @@ const VerifyPRO = () => {
               width={100}
               cellRender={() => (
                 <Button onClick={handleIconClick}>
-                  <LaunchSharpIcon style={{ color: "#525252" }} />
+                  <ArrowOutwardOutlinedIcon style={{ color: "#525252" }} />
                 </Button>
               )}
             />

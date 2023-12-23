@@ -17,11 +17,13 @@ import DataGrid, {
   Toolbar,
   Item,
   Selection,
+  Pager,
 } from "devextreme-react/data-grid";
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import { UseIssueProContext } from "../../../contexts/issuePro";
 import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
+import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined";
 
 const IssuePROMain = () => {
   const dataSource = {
@@ -146,6 +148,12 @@ const IssuePROMain = () => {
             hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
+            <Pager
+              visible={true}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
+            />
             <Selection mode="multiple" />
             <SearchPanel visible={true} width={300} />
             <ColumnChooser enabled={true} />
@@ -159,7 +167,7 @@ const IssuePROMain = () => {
               width={100}
               cellRender={() => (
                 <Button onClick={handleIconClick}>
-                  <LaunchSharpIcon style={{ color: "#525252" }} />
+                  <ArrowOutwardOutlinedIcon style={{ color: "#525252" }} />
                 </Button>
               )}
             />
@@ -190,7 +198,7 @@ const IssuePROMain = () => {
             <Toolbar className="Toolbar-Item">
               <Item location="before">
                 <div className="informer">
-                  <SubText text={"All PRO’s"} />
+                  <SubText text={"All Issue PRO’s"} />
                 </div>
               </Item>
               <Item name="searchPanel" />

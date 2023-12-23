@@ -23,6 +23,7 @@ import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
 import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
+import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined";
 
 const VerifyTransferMain = () => {
   const dataSource = {
@@ -135,9 +136,10 @@ const VerifyTransferMain = () => {
           >
             <Paging defaultPageSize={10} />
             <Pager
+              visible={true}
               // showInfo={true}
+              displayMode="compact"
               showNavigationButtons={true}
-              allowedPageSizes={[10, 20, 30]}
             />
             <Selection mode="multiple" />
             <SearchPanel visible={true} width={300} />
@@ -151,7 +153,7 @@ const VerifyTransferMain = () => {
               width={100}
               cellRender={() => (
                 <Button onClick={handleIconClick}>
-                  <LaunchSharpIcon style={{ color: "#525252" }} />
+                  <ArrowOutwardOutlinedIcon style={{ color: "#525252" }} />
                 </Button>
               )}
             />

@@ -27,6 +27,7 @@ import DataGrid, {
   Item,
   Editing,
   Selection,
+  Pager,
 } from "devextreme-react/data-grid";
 import "./transfer.scss";
 
@@ -153,6 +154,12 @@ const GenerateInventoryTransfer = () => {
             hoverStateEnabled={true}
           >
             <Paging defaultPageSize={10} />
+            <Pager
+              visible={true}
+              // showInfo={true}
+              displayMode="compact"
+              showNavigationButtons={true}
+            />
             <Selection mode={"multiple"} />
             <Editing
               allowDeleting={true}

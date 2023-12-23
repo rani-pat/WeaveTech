@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useLocation, NavLink } from "react-router-dom";
 import "./style.scss";
-import { Button } from "devextreme-react";
 
 const findMenuItem = (menuItems, path) => {
   if (!menuItems || !menuItems.length) {
@@ -80,6 +79,9 @@ const Breadcrumbs = ({ navigation, routes }) => {
       link: currentPath,
     };
   });
+  const handleRefreshClick = () => {
+    window.location.reload(true);
+  };
 
   return (
     <div className="breadcrumbs">
@@ -102,7 +104,9 @@ const Breadcrumbs = ({ navigation, routes }) => {
           </span>
         ))}
       </div>
-      <div className="refresh-btn">Refresh</div>
+      <div className="refresh-btn" onClick={handleRefreshClick}>
+        Refresh
+      </div>
     </div>
   );
 };

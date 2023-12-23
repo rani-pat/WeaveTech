@@ -11,14 +11,14 @@
   font-style: normal;
   font-weight: 500;
   line-height: 21px;
+  &.last-child {
+    color: #262626;
+  }
 }
 
-// .breadcrumbs .active-link {
+// .last-breadcrumb {
 //   color: gray;
 // }
-.last-breadcrumb {
-  color: gray;
-}
 .refresh-btn {
   color: var(
     --primary-colours-7000057-a-1-brand,

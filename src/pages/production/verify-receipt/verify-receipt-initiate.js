@@ -11,7 +11,6 @@ import {
   SelectBox,
   Popup,
 } from "devextreme-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button as TextBoxButton } from "devextreme-react/text-box";
 import { PopupIcon } from "../../../assets";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";

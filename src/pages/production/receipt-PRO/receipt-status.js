@@ -13,7 +13,6 @@ import {
   SelectBox,
   Popup,
 } from "devextreme-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button as TextBoxButton } from "devextreme-react/text-box";
 import { PopupIcon, DeleteIcon } from "../../../assets";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
@@ -33,7 +32,6 @@ import DataGrid, {
   Scrolling,
   Pager,
 } from "devextreme-react/data-grid";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { UseReceiptProContext } from "../../../contexts/receipt-pro";
 
 const ReceiptStatus = () => {
@@ -205,15 +203,9 @@ const ReceiptStatus = () => {
         <div className="expandable-text" onClick={handleToggleExpand}>
           Additional Information, make changes
           {isExpanded ? (
-            <FontAwesomeIcon
-              icon={faChevronUp}
-              style={{ marginLeft: "25px" }}
-            />
+            <Button icon="chevronup" style={{ marginLeft: "36px" }} />
           ) : (
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              style={{ marginLeft: "25px" }}
-            />
+            <Button icon="chevrondown" style={{ marginLeft: "36px" }} />
           )}
         </div>
         {isExpanded && (

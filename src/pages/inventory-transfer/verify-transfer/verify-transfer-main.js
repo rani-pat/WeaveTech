@@ -22,8 +22,17 @@ import DataGrid, {
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
-import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined";
+
+const getStatusColor = (status) => {
+  const statusColors = {
+    completed: "#124d22",
+    "in progress": "#06548b",
+    // Add more status types and colors as needed
+  };
+
+  return statusColors[status.toLowerCase()] || "#000"; // Default color
+};
 
 const VerifyTransferMain = () => {
   const dataSource = {
@@ -157,7 +166,22 @@ const VerifyTransferMain = () => {
                 </Button>
               )}
             />
-            <Column dataField={"Task_Status"} caption={"Status"} />
+            <Column
+              dataField={"Task_Status"}
+              caption={"Status"}
+              width={250}
+              cellRender={(data) => (
+                <>
+                  <span className="col-main">
+                    <span
+                      className="status-circle"
+                      style={{ backgroundColor: getStatusColor(data["value"]) }}
+                    />
+                    <span data-type={data["value"]}>{data["value"]}</span>
+                  </span>
+                </>
+              )}
+            />
             <Column dataField={"Task_Priority"} caption={"Priority"}>
               <Lookup
                 dataSource={priorities}

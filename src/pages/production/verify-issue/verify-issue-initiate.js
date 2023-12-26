@@ -30,6 +30,16 @@ import DataGrid, {
 } from "devextreme-react/data-grid";
 import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
 
+const getStatusColor = (status) => {
+  const statusColors = {
+    completed: "#124d22",
+    "in progress": "#06548b",
+    // Add more status types and colors as needed
+  };
+
+  return statusColors[status.toLowerCase()] || "#000"; // Default color
+};
+
 const VerifyIssuePRO = () => {
   const dataSource = {
     store: {
@@ -166,7 +176,22 @@ const VerifyIssuePRO = () => {
               <Button name="edit" />
               <Button name="delete" />
             </Column>
-            <Column dataField={"Task_Status"} caption={"Status"} />
+            <Column
+              dataField={"Task_Status"}
+              caption={"Status"}
+              width={250}
+              cellRender={(data) => (
+                <>
+                  <span className="col-main">
+                    <span
+                      className="status-circle"
+                      style={{ backgroundColor: getStatusColor(data["value"]) }}
+                    />
+                    <span data-type={data["value"]}>{data["value"]}</span>
+                  </span>
+                </>
+              )}
+            />
             <Column dataField={"Task_Priority"} caption={"Priority"}>
               <Lookup
                 dataSource={priorities}

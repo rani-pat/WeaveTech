@@ -1,26 +1,26 @@
-// RejectionPopup.js
+// ApprovalPopup.js
 import React from "react";
 import { Popup, TextBox, Button } from "devextreme-react";
 import {
   PopupHeaderText,
   PopupSubText,
 } from "../../../components/typographyText/TypograghyText";
-import { rejectPopupIcon } from "../../../assets";
+import { warning } from "../../../assets";
 
-const RejectionPopup = ({ isVisible, onHide }) => {
+const WarningPopup = ({ isVisible, onHide }) => {
   return (
     <Popup
       visible={isVisible}
       onHiding={onHide}
       width={480}
-      height={325}
+      height={181}
       showCloseButton={false}
       dragEnabled={false}
       showTitle={false}
     >
       <div className="release-popup-main">
         <div style={{ backgroundColor: "rgba(218, 30, 40, 0.06)" }}>
-          <img src={rejectPopupIcon} style={{ padding: "5px" }} />
+          <img src={warning} style={{ padding: "5px" }} />
         </div>
         <div className="popup-close-btn">
           <Button icon="close" onClick={onHide} />
@@ -34,29 +34,15 @@ const RejectionPopup = ({ isVisible, onHide }) => {
           marginTop: "15px",
         }}
       >
-        <PopupHeaderText text={"Rejection"} />
-        <PopupSubText text={"Add input"} />
-      </div>
-
-      <div className="release-popup-text">
-        <TextBox
-          label="Remarks"
-          placeholder="Input"
-          height={56}
-          showClearButton={true}
-        />
-      </div>
-      <div className="release-popup-text">
-        <Button
-          // type="default"
-          text="Rejected"
-          width={480}
-          height={44}
-          onClick={onHide}
+        <PopupHeaderText text={"Only Approved ones can be released"} />
+        <PopupSubText
+          text={
+            "This option is only available when the production order has been approved or select those that are in the approved status."
+          }
         />
       </div>
     </Popup>
   );
 };
 
-export default RejectionPopup;
+export default WarningPopup;

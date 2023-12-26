@@ -18,7 +18,7 @@ import { PopupIcon, DeleteIcon } from "../../../assets";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
 import { navigation } from "../../../app-navigation";
 import routes from "../../../app-routes";
-// import ProjectPopup from ".././project-popup";
+import { DeletePopup } from "../../../components";
 import "devextreme/data/odata/store";
 import DataGrid, {
   Column,
@@ -33,6 +33,17 @@ import DataGrid, {
   Pager,
 } from "devextreme-react/data-grid";
 import { UseIssueProContext } from "../../../contexts/issuePro";
+import VerificationPopup from "../../../components/verification-popup/verification-popup";
+
+const getStatusColor = (status) => {
+  const statusColors = {
+    completed: "#124d22",
+    "in progress": "#06548b",
+    // Add more status types and colors as needed
+  };
+
+  return statusColors[status.toLowerCase()] || "#000"; // Default color
+};
 
 const IssueStatus = () => {
   const dataSource = {
@@ -66,10 +77,10 @@ const IssueStatus = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [ProjectPopupVisible, setProjectPopupVisible] = useState(null);
   const [filterStatus, setFilterStatus] = useState();
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedRowCount, setSelectedRowCount] = useState(0);
+  const [isDeletePopupVisible, setIsDeletePopupVisible] = useState(false);
+  const [isVerifyPopupVisible, setIsVerifyPopupVisible] = useState(false);
 
   const onSelectionChanged = ({ selectedRowKeys, selectedRowsData }) => {
     console.log("onSelectionChanged", selectedRowsData);
@@ -83,12 +94,20 @@ const IssueStatus = () => {
   const handleCancelProjectPopup = () => {
     setProjectPopupVisible(false);
   };
-  const handleOpenPopup = () => {
-    setIsPopupVisible(true);
+  const handleCloseDeletePopup = () => {
+    setIsDeletePopupVisible(false);
   };
-  const handleClosePopup = () => {
-    setIsPopupVisible(false);
+
+  const handleOpenDeletePopup = () => {
+    setIsDeletePopupVisible(true);
   };
+  const handleOpenVerifyPopup = () => {
+    setIsVerifyPopupVisible(true);
+  };
+  const handleCloseVerifyPopup = () => {
+    setIsVerifyPopupVisible(false);
+  };
+
   const NewItemsOptions = {
     icon: PopupIcon,
     onClick: () => setProjectPopupVisible(true),
@@ -143,6 +162,7 @@ const IssueStatus = () => {
               type="default"
               disabled={status === "completed"}
               // className="btn-disable"
+              onClick={handleOpenVerifyPopup}
             />
           </div>
         </div>
@@ -390,7 +410,22 @@ const IssueStatus = () => {
               <Button name="edit" />
               <Button name="delete" />
             </Column>
-            <Column dataField={"Task_Status"} caption={"Status"} />
+            <Column
+              dataField={"Task_Status"}
+              caption={"Status"}
+              width={250}
+              cellRender={(data) => (
+                <>
+                  <span className="col-main">
+                    <span
+                      className="status-circle"
+                      style={{ backgroundColor: getStatusColor(data["value"]) }}
+                    />
+                    <span data-type={data["value"]}>{data["value"]}</span>
+                  </span>
+                </>
+              )}
+            />
 
             <Column dataField={"Task_Priority"} caption={"Priority"}>
               <Lookup
@@ -471,67 +506,21 @@ const IssueStatus = () => {
                   text="Delete"
                   type="default"
                   stylingMode="text"
-                  onClick={handleOpenPopup}
+                  onClick={handleOpenDeletePopup}
                 />
               </Item>
             </Toolbar>
           </DataGrid>
         </div>
       </div>
-      <Popup
-        visible={isPopupVisible}
-        onHiding={handleClosePopup}
-        width={480}
-        height={240}
-        showCloseButton={false}
-        dragEnabled={false}
-        showTitle={false}
-      >
-        <div className="release-popup-main">
-          <div className="popup-back-btn">
-            <Button icon="trash" />
-          </div>
-          <div className="popup-close-btn">
-            <Button icon="close" onClick={handleClosePopup} />
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "5px",
-            marginTop: "20px",
-          }}
-        >
-          <PopupHeaderText text={"Are you sure you want to delete?"} />
-          <PopupSubText text={"Do you want to discard changes and go back? "} />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "10px",
-            marginTop: "24px",
-          }}
-        >
-          <Button
-            text="No"
-            width={216}
-            height={44}
-            onClick={handleClosePopup}
-            className="cancelQcBtn"
-          />
-          <Button
-            text="Yes"
-            type="default"
-            width={216}
-            height={44}
-            // onClick={handleInitiateClick}
-            onClick={handleClosePopup}
-            className="OkQcBtn"
-          />
-        </div>
-      </Popup>
+      <DeletePopup
+        isVisible={isDeletePopupVisible}
+        onHide={handleCloseDeletePopup}
+      />
+      <VerificationPopup
+        isVisible={isVerifyPopupVisible}
+        onHide={handleCloseVerifyPopup}
+      />
     </>
   );
 };

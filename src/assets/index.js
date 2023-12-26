@@ -8,3 +8,6 @@ export { default as addIcon } from "./css/SVGs/Add.svg";
 export { default as rejectPopupIcon } from "./css/icon/rejectpopup.png";
 export { default as approvePopupIcon } from "./css/icon/approvepopup.png";
 export { default as folderIcon } from "./css/icon/folder.png";
+export { default as warning } from "./css/icon/warning.png";
+export { default as release } from "./css/icon/release.png";
+export { default as verification } from "./css/icon/verified.png";

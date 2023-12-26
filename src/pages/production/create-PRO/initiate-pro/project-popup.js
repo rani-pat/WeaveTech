@@ -59,7 +59,7 @@ const ProjectPopup = ({ handleCancel, title, caption }) => {
         </div>
         <div className="popup-data">
           <DataGrid
-            height={window.innerHeight - 450}
+            height={window.innerHeight - 350}
             dataSource={dataSource}
             columnAutoWidth={true}
             hoverStateEnabled={true}

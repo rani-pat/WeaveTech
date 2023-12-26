@@ -19,13 +19,23 @@ import DataGrid, {
   Toolbar,
   Item,
   Pager,
-  Editing,
   Scrolling,
 } from "devextreme-react/data-grid";
 import SelectBox from "devextreme-react/select-box";
 import Breadcrumbs from "../../../components/Breadcrumbs/breadcrumbs";
-import LaunchSharpIcon from "@mui/icons-material/LaunchSharp";
 import ArrowOutwardOutlinedIcon from "@mui/icons-material/ArrowOutwardOutlined";
+import ReleasePopup from "./release-popup";
+import WarningPopup from "./warning-popup";
+
+const getStatusColor = (status) => {
+  const statusColors = {
+    completed: "#124d22",
+    "in progress": "#06548b",
+    // Add more status types and colors as needed
+  };
+
+  return statusColors[status.toLowerCase()] || "#000"; // Default color
+};
 
 const CreatePRO = () => {
   const dataSource = {
@@ -57,7 +67,8 @@ const CreatePRO = () => {
   const [filterStatus, setFilterStatus] = useState("All");
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedRowCount, setSelectedRowCount] = useState(0);
-  const [clickedRowKey, setClickedRowKey] = useState(null);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [popupType, setPopupType] = useState(null);
 
   const { setStatusValue } = UseCreateProContext();
   const navigate = useNavigate();
@@ -83,6 +94,31 @@ const CreatePRO = () => {
     console.log("onSelectionChanged", selectedRowsData);
     setSelectedRowKeys(selectedRowKeys);
     setSelectedRowCount(selectedRowKeys.length);
+  };
+  const handleClosePopup = () => {
+    setIsPopupVisible(false);
+  };
+
+  const handleOpenPopup = () => {
+    console.log("onOpenPopup");
+    const selectedRows = dataGrid.instance.getSelectedRowsData();
+    const completedRows = selectedRows.filter(
+      (row) => row.Task_Status === "Completed"
+    );
+    console.log("completedRows", completedRows);
+
+    const inProgressRows = selectedRows.filter((row) => row.Task_ID === 4);
+    console.log("inProgressRows", inProgressRows);
+
+    if (completedRows.length > 0 && inProgressRows.length > 0) {
+      console.log("warning", inProgressRows);
+      setPopupType("warning");
+      setIsPopupVisible(true);
+    } else if (completedRows.length > 0) {
+      console.log("release", completedRows);
+      setPopupType("release");
+      setIsPopupVisible(true);
+    }
   };
 
   let dataGrid;
@@ -137,7 +173,7 @@ const CreatePRO = () => {
             showBorders={false}
             columnAutoWidth={true}
             // columnWidth={100}
-            // columnHidingEnabled={true}
+            columnHidingEnabled={false}
             selection={{
               mode: "multiple",
             }}
@@ -177,7 +213,22 @@ const CreatePRO = () => {
                 </Button>
               )}
             />
-            <Column dataField={"Task_Status"} caption={"Status"} width={300} />
+            <Column
+              dataField={"Task_Status"}
+              caption={"Status"}
+              width={250}
+              cellRender={(data) => (
+                <>
+                  <span className="col-main">
+                    <span
+                      className="status-circle"
+                      style={{ backgroundColor: getStatusColor(data["value"]) }}
+                    />
+                    <span data-type={data["value"]}>{data["value"]}</span>
+                  </span>
+                </>
+              )}
+            />
             <Column
               dataField={"Task_Priority"}
               caption={"Priority"}
@@ -257,13 +308,19 @@ const CreatePRO = () => {
                   text="Release"
                   type="default"
                   stylingMode="text"
-                  // onClick={this.onClick}
+                  onClick={handleOpenPopup}
                 />
               </Item>
             </Toolbar>
           </DataGrid>
         </div>
       </div>
+      {popupType === "warning" && (
+        <WarningPopup isVisible={isPopupVisible} onHide={handleClosePopup} />
+      )}
+      {popupType === "release" && (
+        <ReleasePopup isVisible={isPopupVisible} onHide={handleClosePopup} />
+      )}
     </>
   );
 };

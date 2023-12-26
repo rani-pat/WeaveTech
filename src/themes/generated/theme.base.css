@@ -12285,7 +12285,7 @@
   height: 40px;
 }
 .dx-datagrid-header-panel {
-  text-align: left;
+  text-align: center;
   margin-right: 10px;
 }
 .dx-datagrid-header-panel .dx-toolbar-menu-container .dx-button {
@@ -12511,7 +12511,7 @@
   padding-right: 6px;
 }
 .dx-rtl .dx-datagrid-header-panel {
-  text-align: left;
+  text-align: center;
 }
 .dx-rtl .dx-datagrid-header-panel .dx-datagrid-column-chooser-button {
   margin-left: 0;
@@ -12783,7 +12783,7 @@
 .dx-datagrid .dx-column-lines > td:first-child {
   border-left: none;
   height: 64px;
-  text-align: left;
+  text-align: center;
   padding-left:25px ;
 }
 .dx-datagrid .dx-column-lines > td:last-child {
@@ -12853,7 +12853,7 @@
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
-.dx-rtl .dx-datagrid .dx-datagrid-rowsview .dx-virtual-row > td[style*="text-align: left"]::before {
+.dx-rtl .dx-datagrid .dx-datagrid-rowsview .dx-virtual-row > td[style*="text-align: center"]::before {
   -webkit-transform: scale(1);
   transform: scale(1);
 }

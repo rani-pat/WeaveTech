@@ -30,6 +30,18 @@ import DataGrid, {
 } from "devextreme-react/data-grid";
 import { UseVerifyIssueProContext } from "../../../contexts/verifyIssuePro";
 import "./transfer.scss";
+import { DeletePopup } from "../../../components";
+import VerificationPopup from "../../../components/verification-popup/verification-popup";
+
+const getStatusColor = (status) => {
+  const statusColors = {
+    completed: "#124d22",
+    "in progress": "#06548b",
+    // Add more status types and colors as needed
+  };
+
+  return statusColors[status.toLowerCase()] || "#000"; // Default color
+};
 
 const GenerateInventoryTransfer = () => {
   const dataSource = {
@@ -57,8 +69,11 @@ const GenerateInventoryTransfer = () => {
     { name: "Normal", value: 2 },
     { name: "Low", value: 1 },
   ];
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [popupType, setPopupType] = useState("");
+  const [isDeletePopupVisible, setIsDeletePopupVisible] = useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [selectedRowCount, setSelectedRowCount] = useState(0);
+  const [isVerifyPopupVisible, setIsVerifyPopupVisible] = useState(false);
+
   const { status, setstatus } = UseVerifyIssueProContext();
 
   const NewItemsOptions = {
@@ -66,15 +81,25 @@ const GenerateInventoryTransfer = () => {
   };
   let dataGrid;
 
-  const handleOpenPopup = (type) => {
-    setPopupType(type);
-    setIsPopupVisible(true);
+  const handleCloseDeletePopup = () => {
+    setIsDeletePopupVisible(false);
   };
 
-  const handleClosePopup = () => {
-    setIsPopupVisible(false);
+  const handleOpenDeletePopup = () => {
+    setIsDeletePopupVisible(true);
+  };
+  const handleOpenVerifyPopup = () => {
+    setIsVerifyPopupVisible(true);
+  };
+  const handleCloseVerifyPopup = () => {
+    setIsVerifyPopupVisible(false);
   };
 
+  const onSelectionChanged = ({ selectedRowKeys, selectedRowsData }) => {
+    console.log("onSelectionChanged", selectedRowsData);
+    setSelectedRowKeys(selectedRowKeys);
+    setSelectedRowCount(selectedRowKeys.length);
+  };
   return (
     <>
       <Breadcrumbs navigation={navigation} routes={routes} />
@@ -91,6 +116,7 @@ const GenerateInventoryTransfer = () => {
               width={144}
               type="default"
               disabled={status === "completed"}
+              onClick={handleOpenVerifyPopup}
             />
           </div>
         </div>
@@ -155,6 +181,8 @@ const GenerateInventoryTransfer = () => {
               dataGrid = ref;
             }}
             hoverStateEnabled={true}
+            selectedRowKeys={selectedRowKeys}
+            onSelectionChanged={onSelectionChanged}
           >
             <Paging defaultPageSize={10} />
             <Pager
@@ -169,8 +197,8 @@ const GenerateInventoryTransfer = () => {
               allowUpdating={true}
               useIcons={true}
             />
-            <SearchPanel visible={true} width={300} />
-            <ColumnChooser enabled={true} />
+            <SearchPanel visible={!selectedRowKeys.length} width={300} />
+            <ColumnChooser enabled={!selectedRowKeys.length} />
 
             <Column
               dataField={"Task_Subject"}
@@ -181,7 +209,22 @@ const GenerateInventoryTransfer = () => {
               <Button name="edit" />
               <Button name="delete" />
             </Column>
-            <Column dataField={"Task_Status"} caption={"Status"} />
+            <Column
+              dataField={"Task_Status"}
+              caption={"Status"}
+              width={250}
+              cellRender={(data) => (
+                <>
+                  <span className="col-main">
+                    <span
+                      className="status-circle"
+                      style={{ backgroundColor: getStatusColor(data["value"]) }}
+                    />
+                    <span data-type={data["value"]}>{data["value"]}</span>
+                  </span>
+                </>
+              )}
+            />
             <Column dataField={"Task_Priority"} caption={"Priority"}>
               <Lookup
                 dataSource={priorities}
@@ -216,6 +259,7 @@ const GenerateInventoryTransfer = () => {
                   placeholder="Add New Item"
                   width={165}
                   className="selectbox-left"
+                  visible={!selectedRowKeys.length > 0}
                 >
                   <TextBoxButton
                     name="popupSearch"
@@ -227,10 +271,35 @@ const GenerateInventoryTransfer = () => {
                 </TextBox>
               </Item>
               <Item name="columnChooserButton" />
+              <Item location="after">
+                <NormalButton
+                  text="Cancel"
+                  type="normal"
+                  stylingMode="text"
+                  visible={selectedRowKeys.length > 0}
+                />
+              </Item>
+              <Item location="after">
+                <Button
+                  visible={selectedRowKeys.length > 0}
+                  text="Delete"
+                  type="default"
+                  stylingMode="text"
+                  onClick={handleOpenDeletePopup}
+                />
+              </Item>
             </Toolbar>
           </DataGrid>
         </div>
       </div>
+      <DeletePopup
+        isVisible={isDeletePopupVisible}
+        onHide={handleCloseDeletePopup}
+      />
+      <VerificationPopup
+        isVisible={isVerifyPopupVisible}
+        onHide={handleCloseVerifyPopup}
+      />
     </>
   );
 };

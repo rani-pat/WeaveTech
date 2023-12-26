@@ -1,13 +1,13 @@
-// RejectionPopup.js
+// ApprovalPopup.js
 import React from "react";
 import { Popup, TextBox, Button } from "devextreme-react";
 import {
   PopupHeaderText,
   PopupSubText,
-} from "../../../components/typographyText/TypograghyText";
-import { rejectPopupIcon } from "../../../assets";
+} from "../../components/typographyText/TypograghyText";
+import { verification } from "../../assets";
 
-const RejectionPopup = ({ isVisible, onHide }) => {
+const VerificationPopup = ({ isVisible, onHide }) => {
   return (
     <Popup
       visible={isVisible}
@@ -19,8 +19,8 @@ const RejectionPopup = ({ isVisible, onHide }) => {
       showTitle={false}
     >
       <div className="release-popup-main">
-        <div style={{ backgroundColor: "rgba(218, 30, 40, 0.06)" }}>
-          <img src={rejectPopupIcon} style={{ padding: "5px" }} />
+        <div style={{ backgroundColor: "#F0F7FF" }}>
+          <img src={verification} style={{ padding: "5px" }} />
         </div>
         <div className="popup-close-btn">
           <Button icon="close" onClick={onHide} />
@@ -34,8 +34,8 @@ const RejectionPopup = ({ isVisible, onHide }) => {
           marginTop: "15px",
         }}
       >
-        <PopupHeaderText text={"Rejection"} />
-        <PopupSubText text={"Add input"} />
+        <PopupHeaderText text={"Send for Approval"} />
+        <PopupSubText text={"Add remarks "} />
       </div>
 
       <div className="release-popup-text">
@@ -46,17 +46,32 @@ const RejectionPopup = ({ isVisible, onHide }) => {
           showClearButton={true}
         />
       </div>
-      <div className="release-popup-text">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: "10px",
+          marginTop: "24px",
+        }}
+      >
         <Button
-          // type="default"
-          text="Rejected"
-          width={480}
+          text="Discard"
+          width={216}
           height={44}
           onClick={onHide}
+          className="cancelQcBtn"
+        />
+        <Button
+          text="Send"
+          type="default"
+          width={216}
+          height={44}
+          onClick={onHide}
+          className="OkQcBtn"
         />
       </div>
     </Popup>
   );
 };
 
-export default RejectionPopup;
+export default VerificationPopup;

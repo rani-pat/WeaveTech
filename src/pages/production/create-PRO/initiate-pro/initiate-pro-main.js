@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {
   HeaderText,
   SubText,
-  PopupHeaderText,
-  PopupSubText,
 } from "../../../../components/typographyText/TypograghyText";
 import "../create_pro.scss";
 import {
@@ -15,7 +13,7 @@ import {
   Popup,
 } from "devextreme-react";
 import { Button as TextBoxButton } from "devextreme-react/text-box";
-import { PopupIcon, DeleteIcon } from "../../../../assets";
+import { PopupIcon } from "../../../../assets";
 import Breadcrumbs from "../../../../components/Breadcrumbs/breadcrumbs";
 import { navigation } from "../../../../app-navigation";
 import routes from "../../../../app-routes";
@@ -33,7 +31,18 @@ import DataGrid, {
   Scrolling,
   Pager,
 } from "devextreme-react/data-grid";
-import { UseCreateProContext } from "../../../../contexts/createPro";
+import { DeletePopup } from "../../../../components";
+import VerificationPopup from "../../../../components/verification-popup/verification-popup";
+
+const getStatusColor = (status) => {
+  const statusColors = {
+    completed: "#124d22",
+    "in progress": "#06548b",
+    // Add more status types and colors as needed
+  };
+
+  return statusColors[status.toLowerCase()] || "#000"; // Default color
+};
 
 const IntiatePRO = () => {
   const dataSource = {
@@ -62,13 +71,11 @@ const IntiatePRO = () => {
     { name: "Low", value: 1 },
   ];
 
-  const { status, setstatus } = UseCreateProContext();
-
   const [isExpanded, setIsExpanded] = useState(false);
   const [ProjectPopupVisible, setProjectPopupVisible] = useState(null);
   const [filterStatus, setFilterStatus] = useState();
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
-
+  const [isDeletePopupVisible, setIsDeletePopupVisible] = useState(false);
+  const [isVerifyPopupVisible, setIsVerifyPopupVisible] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedRowCount, setSelectedRowCount] = useState(0);
 
@@ -84,12 +91,22 @@ const IntiatePRO = () => {
   const handleCancelProjectPopup = () => {
     setProjectPopupVisible(false);
   };
-  const handleOpenPopup = () => {
-    setIsPopupVisible(true);
+
+  const handleCloseDeletePopup = () => {
+    setIsDeletePopupVisible(false);
   };
-  const handleClosePopup = () => {
-    setIsPopupVisible(false);
+
+  const handleOpenDeletePopup = () => {
+    setIsDeletePopupVisible(true);
   };
+
+  const handleOpenVerifyPopup = () => {
+    setIsVerifyPopupVisible(true);
+  };
+  const handleCloseVerifyPopup = () => {
+    setIsVerifyPopupVisible(false);
+  };
+
   const NewItemsOptions = {
     icon: PopupIcon,
     onClick: () => setProjectPopupVisible(true),
@@ -119,7 +136,7 @@ const IntiatePRO = () => {
       <Popup
         visible={ProjectPopupVisible}
         onHiding={handleCancelProjectPopup}
-        height={window.innerHeight - 200}
+        height={window.innerHeight - 100}
         showTitle={false}
         className="initate-popup-css"
       >
@@ -141,6 +158,7 @@ const IntiatePRO = () => {
               height={44}
               width={144}
               type="default"
+              onClick={handleOpenVerifyPopup}
             />
           </div>
         </div>
@@ -388,7 +406,22 @@ const IntiatePRO = () => {
               <Button name="edit" />
               <Button name="delete" />
             </Column>
-            <Column dataField={"Task_Status"} caption={"Status"} />
+            <Column
+              dataField={"Task_Status"}
+              caption={"Status"}
+              width={250}
+              cellRender={(data) => (
+                <>
+                  <span className="col-main">
+                    <span
+                      className="status-circle"
+                      style={{ backgroundColor: getStatusColor(data["value"]) }}
+                    />
+                    <span data-type={data["value"]}>{data["value"]}</span>
+                  </span>
+                </>
+              )}
+            />
 
             <Column dataField={"Task_Priority"} caption={"Priority"}>
               <Lookup
@@ -469,67 +502,21 @@ const IntiatePRO = () => {
                   text="Delete"
                   type="default"
                   stylingMode="text"
-                  onClick={handleOpenPopup}
+                  onClick={handleOpenDeletePopup}
                 />
               </Item>
             </Toolbar>
           </DataGrid>
         </div>
       </div>
-      <Popup
-        visible={isPopupVisible}
-        onHiding={handleClosePopup}
-        width={480}
-        height={240}
-        showCloseButton={false}
-        dragEnabled={false}
-        showTitle={false}
-      >
-        <div className="release-popup-main">
-          <div className="popup-back-btn">
-            <Button icon="trash" />
-          </div>
-          <div className="popup-close-btn">
-            <Button icon="close" onClick={handleClosePopup} />
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "5px",
-            marginTop: "20px",
-          }}
-        >
-          <PopupHeaderText text={"Are you sure you want to delete?"} />
-          <PopupSubText text={"Do you want to discard changes and go back? "} />
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "10px",
-            marginTop: "24px",
-          }}
-        >
-          <Button
-            text="No"
-            width={216}
-            height={44}
-            onClick={handleClosePopup}
-            className="cancelQcBtn"
-          />
-          <Button
-            text="Yes"
-            type="default"
-            width={216}
-            height={44}
-            // onClick={handleInitiateClick}
-            onClick={handleClosePopup}
-            className="OkQcBtn"
-          />
-        </div>
-      </Popup>
+      <DeletePopup
+        isVisible={isDeletePopupVisible}
+        onHide={handleCloseDeletePopup}
+      />
+      <VerificationPopup
+        isVisible={isVerifyPopupVisible}
+        onHide={handleCloseVerifyPopup}
+      />
     </>
   );
 };

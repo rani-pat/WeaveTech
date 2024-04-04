@@ -78,7 +78,7 @@
 }
 .dx-theme-generic-typography .dx-swatch-additional,
 .dx-theme-generic-typography.dx-swatch-additional {
-  background-color: #0057a1;
+  background-color: #fff;
   color: #333;
   font-weight: 400;
   font-size: 14px;
@@ -7663,8 +7663,9 @@
   font-family: Inter;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 21px;
+  color: #262626;
 }
 .dx-swatch-additional .dx-treeview-item.dx-state-disabled {
   opacity: 0.5;
@@ -7840,6 +7841,7 @@
   font-size: 18px;
   text-align: center;
   line-height: 18px;
+  color: #262626;
 }
 .dx-swatch-additional .dx-treeview-item.dx-state-hover {
   background-color: rgba(0, 0, 0, 0.04);
@@ -7854,11 +7856,13 @@
   width: 21px;
   height: 32px;
   top: 0;
+  color: #262626;
   left: -4px;
 }
 
 .dx-swatch-additional .dx-treeview-toggle-item-visibility::before {
-  content: "\f04e";
+  content: "\e5cc";
+  font-family: "Material Symbols Outlined";
   position: absolute;
   display: block;
   width: 22px;
@@ -7866,16 +7870,19 @@
   margin-top: -11px;
   left: 50%;
   margin-left: -11px;
+  color: #262626;
+
 }
 .dx-swatch-additional
   .dx-treeview-toggle-item-visibility.dx-treeview-toggle-item-visibility-opened {
   font: 22px/22px DXIcons;
   text-align: center;
-  color: #fff;
+  color: #262626;
 }
 .dx-swatch-additional
   .dx-treeview-toggle-item-visibility.dx-treeview-toggle-item-visibility-opened::before {
-  content: "\f001";
+  content: "\e5cf";
+  font-family: "Material Symbols Outlined";
   position: absolute;
   display: block;
   width: 22px;
@@ -7883,5 +7890,5 @@
   margin-top: -11px;
   left: 50%;
   margin-left: -11px;
-  
+  color: #262626;
 }

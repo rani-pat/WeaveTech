@@ -1,109 +1,110 @@
-import React from "react";
-import { Link, useLocation, NavLink } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import "./style.scss";
 
-const findMenuItem = (menuItems, path) => {
-  if (!menuItems || !menuItems.length) {
+const findRoute = (routes, path) => {
+  return routes ? routes.find((route) => route.path === path) : null;
+};
+
+const Breadcrumbs = ({ routes, navigation }) => {
+  const location = useLocation();
+
+  useEffect(() => {}, [location]);
+
+  if (!location.pathname) {
     return null;
   }
 
-  const cleanPath = path.replace(/^\//, "");
-
-  const findRecursive = (items, currentPath) => {
-    for (const item of items) {
-      const cleanItemPath = (item.path || "").replace(/^\//, "");
-
-      if (cleanItemPath === currentPath) {
-        return [item];
-      }
-
-      if (item.items && Array.isArray(item.items)) {
-        const nestedItems = findRecursive(item.items, currentPath);
-        if (nestedItems.length > 0) {
-          return [
-            {
-              text: item.text,
-              path: item.path,
-              icon: item.icon,
-            },
-            ...nestedItems,
-          ];
-        }
-      }
-    }
-
-    return [];
-  };
-
-  const result = findRecursive(menuItems, cleanPath).flat();
-
-  if (result.length === 0) {
-    const route = menuItems.find((r) => r.path === cleanPath);
-    return route ? [route] : [];
-  }
-
-  return result;
-};
-
-const Breadcrumbs = ({ navigation, routes }) => {
-  const location = useLocation();
   const pathSegments = location.pathname.split("/").filter(Boolean);
 
   const breadcrumbItems = pathSegments.map((segment, index) => {
     const currentPath = `/${pathSegments.slice(0, index + 1).join("/")}`;
-    const menuItem = findMenuItem(navigation, currentPath);
+    const route = findRoute(routes, currentPath);
 
-    console.log("Result for", currentPath, ":", menuItem);
-
-    if (!menuItem.length) {
-      const route = routes.find((r) => r.path === currentPath);
-      if (route) {
-        return { label: route.path.split("/")[2], link: route.path };
-      }
-      const nestedRoute = routes.find((r) => currentPath.startsWith(r.path));
-      if (nestedRoute) {
-        const nestedPath = currentPath.replace(nestedRoute.path, "").slice(1);
-        const nestedItems = findMenuItem(navigation, nestedRoute.path);
-        const itemsLabel = nestedItems.map((item) => item.text).join(" / ");
-
-        return {
-          label: ` ${nestedPath}`,
-          link: currentPath,
-        };
-      }
-      return { label: segment, link: null };
+    if (!route) {
+      return {
+        label: segment,
+        link: currentPath,
+        isLast: index === pathSegments.length - 1,
+      };
     }
 
+    const currentLabel =
+      index === pathSegments.length - 1 ? segment : route.element.displayName;
+
     return {
-      label: menuItem.map((item) => item.text).join(" / "),
+      label: currentLabel,
       link: currentPath,
+      isLast: index === pathSegments.length - 1,
     };
   });
+  function findMatchingText(path, navigation) {
+    function search(items, path) {
+      for (const item of items) {
+        if (item.path === path) {
+          // console.log("path", item, path);
+          return item;
+        } else if (item.items) {
+          const subItemText = search(item.items, path);
+          if (subItemText) {
+            return subItemText;
+          }
+        }
+      }
+      return null;
+    }
+
+    // console.log("asdasf", search(navigation, path));
+    return search(navigation, path);
+  }
   const handleRefreshClick = () => {
     window.location.reload(true);
   };
-
   return (
     <div className="breadcrumbs">
-      <div>
-        {breadcrumbItems.map((breadcrumb, index) => (
-          <span key={index}>
-            {index > 0 && <span> / </span>}
-            {breadcrumb.link &&
-            breadcrumb.label.split("/").length - 1 > index ? (
-              <NavLink
-                to={breadcrumb.link}
-                className="breadcrumb-link"
-                activeClassName="active-link"
-              >
-                {breadcrumb.label}
-              </NavLink>
-            ) : (
-              <span>{breadcrumb.label}</span>
-            )}
-          </span>
-        ))}
-      </div>
+      <>
+        {breadcrumbItems.map((pathSegment, key) => {
+          const isLastChild = pathSegment.isLast;
+          const className = `breadcrumb-item ${
+            isLastChild ? "last-child" : ""
+          }`;
+
+          if (pathSegment && (pathSegment !== null || pathSegment !== "")) {
+            const text = findMatchingText(pathSegment.link, navigation);
+            if (text !== null) {
+              return (
+                <Link key={key} to={text.path}>
+                  <div key={key} className={className}>
+                    <span className="breadcrumb-item-text">{text.text}</span>
+                    {isLastChild ? null : (
+                      <span className="breadcrumb-slash">/</span>
+                    )}
+                  </div>
+                </Link>
+              );
+            } else {
+              return (
+                <Link key={key} to={pathSegment.link}>
+                  <div key={key} className={className}>
+                    <span className="breadcrumb-item-text">
+                      {pathSegment.label}
+                    </span>
+                    {isLastChild ? null : (
+                      <span className="breadcrumb-slash">/</span>
+                    )}
+                  </div>
+                </Link>
+              );
+            }
+          } else {
+            return (
+              <Link key={key} to="/home">
+                <div className="breadcrumb-item breadcrumb-home">Home</div>
+              </Link>
+            );
+          }
+        })}
+      </>
       <div className="refresh-btn" onClick={handleRefreshClick}>
         Refresh
       </div>

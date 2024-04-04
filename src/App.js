@@ -12,10 +12,6 @@ import { useScreenSizeClass } from "./utils/media-query";
 import Content from "./Content";
 import UnauthenticatedContent from "./UnauthenticatedContent";
 import { CreateProProvider } from "./contexts/createPro";
-import { VerifyProProvider } from "./contexts/verifyPro";
-import { IssueProProvider } from "./contexts/issuePro";
-import { VerifyIssueProProvider } from "./contexts/verifyIssuePro";
-import { ReceiptProProvider } from "./contexts/receipt-pro";
 import { HeaderProvider } from "./contexts/headerContext";
 
 function App() {
@@ -40,19 +36,11 @@ export default function Root() {
       <AuthProvider>
         <NavigationProvider>
           <CreateProProvider>
-            <VerifyProProvider>
-              <IssueProProvider>
-                <VerifyIssueProProvider>
-                  <ReceiptProProvider>
-                    <div className={`app ${screenSizeClass}`}>
-                      <HeaderProvider>
-                        <App />
-                      </HeaderProvider>
-                    </div>
-                  </ReceiptProProvider>
-                </VerifyIssueProProvider>
-              </IssueProProvider>
-            </VerifyProProvider>
+            <div className={`app ${screenSizeClass}`}>
+              <HeaderProvider>
+                <App />
+              </HeaderProvider>
+            </div>
           </CreateProProvider>
         </NavigationProvider>
       </AuthProvider>

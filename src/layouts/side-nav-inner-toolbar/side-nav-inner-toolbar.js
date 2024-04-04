@@ -9,6 +9,7 @@ import "./side-nav-inner-toolbar.scss";
 import { useScreenSize } from "../../utils/media-query";
 import { Template } from "devextreme-react/core/template";
 import { useMenuPatch } from "../../utils/patches";
+import { bankLogo } from "../../assets";
 
 export default function SideNavInnerToolbar({ title, children }) {
   const scrollViewRef = useRef(null);

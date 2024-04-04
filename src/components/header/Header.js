@@ -5,7 +5,11 @@ import UserPanel from "../user-panel/UserPanel";
 import "./Header.scss";
 import { Template } from "devextreme-react/core/template";
 import { useScreenSize } from "../../utils/media-query";
-import { PopupHeaderText } from "../typographyText/TypograghyText";
+import {
+  HeaderText,
+  PopupHeaderText,
+  SubText,
+} from "../typographyText/TypograghyText";
 import NotificationDropdown from "../notification-dropdown/NotificationDropdown";
 import { UseHeaderContext } from "../../contexts/headerContext";
 import AddItem from "../add-item-dropdown/AddItem";
@@ -39,32 +43,33 @@ export default function Header({ menuToggleEnabled, title, toggleMenu }) {
               <img src={title} alt="site logo" className="site-logo" />
             </Item>
           )}
+          {!isXSmall && (
+            <Item location={"before"} cssClass={"header-title"}>
+              <HeaderText text={"Weavetech"} />
+            </Item>
+          )}
           <Item location={"before"} cssClass={"header-title"}>
             <div style={{ marginLeft: "30px" }}>
               <PopupHeaderText text={"Hello, Welcome Admin"} />
             </div>
           </Item>
-
-          <Item
-            location={"after"}
-            locateInMenu={"auto"}
-            menuItemTemplate={"addPanelTemplate"}
-          >
-            <Button stylingMode={"text"} className="add-button">
-              <AddItem menuMode={"context"} />
-            </Button>
-          </Item>
-
           <Item location={"after"} cssClass={"nav-icons"}>
-            {/* <Button stylingMode={"text"} icon="bell"/> */}
             <div className="notification">
               <span
-                className="dx-icon dx-icon-bell bell-icon"
+                className="material-symbols-outlined bell-icon"
                 onClick={toggleNotifyDropdown}
               >
-                <span className="notify-badge">{notificationCount}</span>
+                notifications
               </span>
+              {notificationCount == 0 ? (
+                " "
+              ) : (
+                <span className="notify-badge">{notificationCount}</span>
+              )}
             </div>
+          </Item>
+          <Item location={"after"} cssClass={"nav-icons"}>
+            <div></div>
           </Item>
           <Item
             location={"after"}
@@ -80,9 +85,6 @@ export default function Header({ menuToggleEnabled, title, toggleMenu }) {
           </Item>
           <Template name={"userPanelTemplate"}>
             <UserPanel menuMode={"list"} />
-          </Template>
-          <Template name={"addPanelTemplate"}>
-            <AddItem menuMode={"list"} />
           </Template>
         </Toolbar>
       </header>

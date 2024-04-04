@@ -2,72 +2,45 @@
 
 export const navigation = [
   {
-    text: "Home",
-    path: "/home",
-    icon: "home",
+    text: "Verify Outgoing Pay",
+    path: "/outgoing-payment",
+    icon: "rule",
   },
   {
-    text: "Production",
-    icon: "folder",
-    path: "/production",
+    text: "Reports",
+    path: "/reports",
+    icon: `monitoring`,
+  },
+  {
+    text: "User Configurations",
+    icon: "manage_accounts",
+    path: "/user-configurations",
     items: [
       {
-        text: "Create PRO",
-        path: "/create-pro",
-        icon: "add",
+        text: "Create User",
+        path: "/user-configurations/addUser",
+        icon: "person_add",
       },
       {
-        text: "Verify Create",
-        path: "/verify-pro-listing",
-        icon: "checklist",
+        text: "Authorisation",
+        path: "/user-configurations/user-authorization",
+        icon: "rule_settings",
       },
       {
-        text: "Issue PRO",
-        path: "/issue-pro",
-        icon: "import",
+        text: "Warehouse Rule",
+        path: "/user-configurations/warehouse-rule",
+        icon: "admin_panel_settings",
       },
       {
-        text: "Verify Issue",
-        path: "/verify-issue-pro-listing",
-        icon: "checklist",
-      },
-      {
-        text: "Receipt PRO",
-        path: "/receipt-pro",
-        icon: "arrowdown",
-      },
-      {
-        text: "Verify Receipt",
-        path: "/verify-receipt",
-        icon: "checklist",
-      },
-      {
-        text: "Return Items",
-        path: "/return-items",
-        icon: "hidepanel",
-      },
-      {
-        text: "Close PRO",
-        path: "/close-pro",
-        icon: "deleterow",
+        text: "Notifications Rule",
+        path: "/user-configurations/notifications-rule",
+        icon: "location_away",
       },
     ],
   },
   {
-    text: "Inventory Transfer",
-    icon: "toolbox",
-    path: "/transfer",
-    items: [
-      {
-        text: "Transfer",
-        path: "/inventory-transfer",
-        icon: "unlock",
-      },
-      {
-        text: "Verify Transfer",
-        path: "/verify-transfer",
-        icon: "checklist",
-      },
-    ],
+    text: "Settings",
+    path: "/settings",
+    icon: `settings`,
   },
 ];

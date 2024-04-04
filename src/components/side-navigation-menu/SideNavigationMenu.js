@@ -10,14 +10,16 @@ import { navigation } from "../../app-navigation";
 import { useNavigation } from "../../contexts/navigation";
 import { useScreenSize } from "../../utils/media-query";
 import "./SideNavigationMenu.scss";
-import { Autocomplete, Button } from "devextreme-react";
 import * as events from "devextreme/events";
+import { bankLogo } from "../../assets";
+import { PopupSubText, SubText } from "../typographyText/TypograghyText";
 
 export default function SideNavigationMenu(props) {
   const { children, selectedItemChanged, openMenu, compactMode, onMenuReady } =
     props;
-
   const { isLarge } = useScreenSize();
+  const [searchValue, setSearchValue] = useState("");
+
   function normalizePath() {
     return navigation.map((item) => ({
       ...item,
@@ -26,16 +28,12 @@ export default function SideNavigationMenu(props) {
     }));
   }
 
-  const items = useMemo(
-    normalizePath,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-  const [searchValue, setSearchValue] = useState("");
+  const items = useMemo(normalizePath, [isLarge]);
 
   const handleSearchValueChanged = (e) => {
     setSearchValue(e.value);
   };
+
   const filterItemsRecursively = (item, searchValue) => {
     const normalizedSearchValue = (searchValue || "").toLowerCase();
 
@@ -62,6 +60,7 @@ export default function SideNavigationMenu(props) {
 
   const treeViewRef = useRef(null);
   const wrapperRef = useRef();
+
   const getWrapperRef = useCallback(
     (element) => {
       const prevElement = wrapperRef.current;
@@ -82,7 +81,6 @@ export default function SideNavigationMenu(props) {
     if (!treeView) {
       return;
     }
-
     if (currentPath !== undefined) {
       treeView.selectItem(currentPath);
       treeView.expandItem(currentPath);
@@ -93,36 +91,32 @@ export default function SideNavigationMenu(props) {
     }
   }, [currentPath, compactMode]);
 
+  const itemRender = (itemData) => {
+    return (
+      <>
+        {itemData.icon && (
+          <i className="dx-icon material-symbols-outlined ">{itemData.icon}</i>
+        )}
+        <span>{itemData.text}</span>
+      </>
+    );
+  };
+
   return (
     <div
       className={"dx-swatch-additional side-navigation-menu"}
       ref={getWrapperRef}
     >
-      {compactMode && (
-        <div className="search-icon">
-          <Button icon="search" />
-        </div>
-      )}
-      {!compactMode && (
-        <div className="search-box">
-          <i className="dx-icon dx-icon-search"></i>
-          <Autocomplete
-            placeholder="Search the menu"
-            stylingMode="outlined"
-            showClearButton={true}
-            displayExpr={(item) => item}
-            searchExpr="name"
-            className={"custom-search-box"}
-            value={searchValue}
-            onValueChanged={handleSearchValueChanged}
-          />
-        </div>
-      )}
       {children}
+      {!compactMode && (
+        <div className="bank-logo">
+          <PopupSubText text={"Integrated By Bank API"} />
+          <img src={bankLogo} alt="logo" />
+        </div>
+      )}
       <div className={"menu-container"}>
         <TreeView
           ref={treeViewRef}
-          // items={items}
           items={filteredItems}
           keyExpr={"path"}
           selectionMode={"single"}
@@ -131,6 +125,7 @@ export default function SideNavigationMenu(props) {
           onItemClick={selectedItemChanged}
           onContentReady={onMenuReady}
           width={"100%"}
+          itemRender={itemRender}
         />
       </div>
     </div>

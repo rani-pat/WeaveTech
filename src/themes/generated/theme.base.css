@@ -107,6 +107,7 @@
 }
 .dx-theme-generic-typography a {
   color: #0057a1;
+  text-decoration: none;
 }
 .dx-icon-add,
 .dx-icon-addcolumnleft,

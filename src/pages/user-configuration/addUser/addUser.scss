@@ -1,0 +1,45 @@
+.navigation-header-create-pro-auth {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.addUserForm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .close-btn-section {
+    .dx-widget.dx-button.dx-button-mode-contained.dx-button-normal.dx-button-has-icon {
+      border: none;
+    }
+  }
+}
+
+.addUserForm-body {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .assUser-subDiv1 {
+    display: flex;
+    gap: 1rem;
+    .assUser-subDiv1-subDiv2 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .assUser-subDiv1 {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  .assUser-subDiv1 > * {
+    width: 100%;
+  }
+}

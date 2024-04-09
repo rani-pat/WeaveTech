@@ -9,12 +9,15 @@
   .dx-toolbar .dx-toolbar-item.menu-button > .dx-toolbar-item-content .dx-icon {
     color: $base-accent;
   }
+  .dx-button {
+    border: none;
+  }
 }
 
 .dx-toolbar.header-toolbar .dx-toolbar-items-container .dx-toolbar-after {
   padding: 0 40px;
   .screen-x-small & {
-    padding: 0 20px;
+    padding: 0 10px;
   }
 }
 
@@ -27,7 +30,11 @@
 
 .header-title .dx-item-content {
   padding: 0;
-  margin: 0;
+  margin: 0 0 0 35px;
+  .screen-x-small & {
+    padding: 0;
+    margin: 0;
+  }
 }
 
 .dx-theme-generic {

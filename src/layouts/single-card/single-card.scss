@@ -1,12 +1,12 @@
 @import "../../themes/generated/variables.base.scss";
 
 .single-card {
-
   .dx-card {
-    width: 330px;
+    width: 540px;
     margin: auto auto;
     padding: 40px;
     flex-grow: 0;
+    height: auto;
 
     .screen-x-small & {
       width: 100%;
@@ -20,17 +20,46 @@
 
     .header {
       margin-bottom: 30px;
-
+      .logo-container {
+        position: absolute;
+        margin: 0;
+        top: 70px;
+        left: 70px;
+        .logo {
+          width: 164px;
+          height: 164px;
+        }
+        @media screen and (max-width: 1000px) {
+          .logo {
+            // display: none;
+            width: 100px;
+            height: 100px;
+          }
+        }
+        @media screen and (max-width: 600px) {
+          .logo {
+            // width: 100px;
+            // height: 100px;
+            display: none;
+          }
+        }
+      }
       .title {
-        color: $base-text-color;
+        // color: $base-text-color;
+        color: #161616;
         line-height: 28px;
         font-weight: 500;
-        font-size: 24px;
+        font-size: 20px;
       }
 
       .description {
-        color: rgba($base-text-color, alpha($base-text-color) * 0.7);
-        line-height: 18px;
+        margin-top: 10px;
+        color: var(--text-colour-body-525252, #525252);
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
       }
     }
   }

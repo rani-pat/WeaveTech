@@ -27,14 +27,9 @@ export const navigation = [
         icon: "rule_settings",
       },
       {
-        text: "Warehouse Rule",
-        path: "/user-configurations/warehouse-rule",
+        text: "User's Password",
+        path: "/user-configurations/changePassword",
         icon: "admin_panel_settings",
-      },
-      {
-        text: "Notifications Rule",
-        path: "/user-configurations/notifications-rule",
-        icon: "location_away",
       },
     ],
   },

@@ -1,0 +1,22 @@
+.release-popup-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .popup-back-btn .dx-button {
+    border: none;
+    background-color: #f0f7ff;
+  }
+  .popup-close-btn .dx-button {
+    border: none;
+  }
+}
+.release-popup-text {
+  margin-top: 25px;
+}
+
+.verify-pro-datagrid {
+  .dx-datagrid-checkbox-size .dx-checkbox-icon {
+    border-radius: 10px;
+  }
+}

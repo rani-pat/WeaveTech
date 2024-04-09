@@ -1,5 +1,14 @@
-import { HomePage, OutgoingPayment, VerifyOutgoingMain } from "./pages";
+import {
+  AddUser,
+  ChangePassword,
+  HomePage,
+  OutgoingPayment,
+  UserAuthorization,
+  UserSettingMain,
+  VerifyOutgoingMain,
+} from "./pages";
 import { withNavigationWatcher } from "./contexts/navigation";
+import ReportMain from "./pages/reports/report-main";
 
 const routes = [
   {
@@ -13,6 +22,26 @@ const routes = [
   {
     path: "/outgoing-payment/verify-outgoing-state",
     element: OutgoingPayment,
+  },
+  {
+    path: "/user-configurations/changePassword",
+    element: ChangePassword,
+  },
+  {
+    path: "/user-configurations/addUser",
+    element: AddUser,
+  },
+  {
+    path: "/user-configurations/user-authorization",
+    element: UserAuthorization,
+  },
+  {
+    path: "/reports",
+    element: ReportMain,
+  },
+  {
+    path: "/settings",
+    element: UserSettingMain,
   },
 ];
 

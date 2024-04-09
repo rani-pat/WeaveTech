@@ -13,6 +13,7 @@ import Content from "./Content";
 import UnauthenticatedContent from "./UnauthenticatedContent";
 import { CreateProProvider } from "./contexts/createPro";
 import { HeaderProvider } from "./contexts/headerContext";
+import { VerifyProProvider } from "./contexts/verify-outgoing-pay";
 
 function App() {
   const { user, loading } = useAuth();
@@ -36,11 +37,13 @@ export default function Root() {
       <AuthProvider>
         <NavigationProvider>
           <CreateProProvider>
-            <div className={`app ${screenSizeClass}`}>
-              <HeaderProvider>
-                <App />
-              </HeaderProvider>
-            </div>
+            <VerifyProProvider>
+              <div className={`app ${screenSizeClass}`}>
+                <HeaderProvider>
+                  <App />
+                </HeaderProvider>
+              </div>
+            </VerifyProProvider>
           </CreateProProvider>
         </NavigationProvider>
       </AuthProvider>

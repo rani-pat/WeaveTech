@@ -25,28 +25,28 @@ const DashboardCards = ({ parameter1, parameter2 }) => {
         <Card
           // text={dashboardData.total}
           text={20}
-          subtext="Weekly PRO"
+          subtext="Weekly Payment"
           imageSrc={SVG1}
           visible={true}
         />
         <Card
           // text={dashboardData.pending}
           text={20}
-          subtext="WEEKLY Pending PRO"
+          subtext="WEEKLY Pending Payment"
           imageSrc={SVG2}
           visible={true}
         />
         <Card
           // text={dashboardData.approved}
           text={20}
-          subtext="WEEKLY Verified PRO"
+          subtext="WEEKLY Verified Payment"
           imageSrc={SVG3}
           visible={true}
         />
         <Card
           // text={dashboardData.rejected}
           text={20}
-          subtext="WEEKLY Rejected PRO"
+          subtext="WEEKLY Rejected Payment"
           imageSrc={SVG4}
           visible={true}
         />

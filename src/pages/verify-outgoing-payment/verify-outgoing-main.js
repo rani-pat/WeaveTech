@@ -75,23 +75,13 @@ const VerifyOutgoingMain = () => {
       const apiResponse = await getAllProductionData(branchId, proId);
       if (!apiResponse.hasError) {
         const productionData = apiResponse.responseData;
-        if (selectedRow.state === "Rejected") {
-          navigate("/outgoing-payment/verify-outgoing-state", {
-            state: {
-              branchId: branchId,
-              proId: proId,
-              productionData: productionData,
-            },
-          });
-        } else {
-          navigate("/outgoing-payment/verify-outgoing-state", {
-            state: {
-              branchId: branchId,
-              proId: proId,
-              productionData: productionData,
-            },
-          });
-        }
+        navigate("/outgoing-payment/verify-outgoing-state", {
+          state: {
+            branchId: branchId,
+            proId: proId,
+            productionData: productionData,
+          },
+        });
       } else {
         console.error("API error:", apiResponse.errorMessage);
         toastDisplayer("error", apiResponse.errorMessage);
@@ -358,9 +348,11 @@ const VerifyOutgoingMain = () => {
               <Item name="searchPanel" />
               <Item location="after">
                 <SelectBox
+                  className="selectbox-left"
                   ref={(ref) => (selectBoxMonth = ref)}
+                  // width={100}
                   value={filterDate}
-                  // width={160}
+                  style={{ minWidth: "160px" }}
                   items={monthItem}
                   valueExpr="value"
                   displayExpr="text"
@@ -371,7 +363,7 @@ const VerifyOutgoingMain = () => {
                 <SelectBox
                   ref={(ref) => (selectBoxCreatedPro = ref)}
                   value={filterStatus}
-                  // width={180}
+                  style={{ minWidth: "180px" }}
                   items={allCreatedpro}
                   valueExpr="value"
                   displayExpr="text"

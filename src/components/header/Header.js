@@ -44,12 +44,12 @@ export default function Header({ menuToggleEnabled, title, toggleMenu }) {
             </Item>
           )}
           {!isXSmall && (
-            <Item location={"before"} cssClass={"header-title"}>
+            <Item location={"before"}>
               <HeaderText text={"Weavetech"} />
             </Item>
           )}
           <Item location={"before"} cssClass={"header-title"}>
-            <div style={{ marginLeft: "30px" }}>
+            <div>
               <PopupHeaderText text={"Hello, Welcome Admin"} />
             </div>
           </Item>

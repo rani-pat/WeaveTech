@@ -1,0 +1,19 @@
+.transfer-inputs-main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.transfer-inputs-main > * {
+  width: 48%;
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+}

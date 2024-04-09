@@ -1,6 +1,7 @@
 @import "../../themes/generated/variables.base.scss";
 
 .login-form {
+  width: 100%;
   .link {
     text-align: center;
     font-size: 16px;
@@ -14,5 +15,78 @@
   .form-text {
     margin: 10px 0;
     color: rgba($base-text-color, alpha($base-text-color) * 0.7);
+  }
+}
+
+.background-container-loginPage {
+  .login-form {
+    .heading {
+      color: #393939;
+      font-family: Poppins;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.3rem;
+    }
+
+    .sub-heading {
+      color: #8d8d8d;
+      font-family: Poppins;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      margin-bottom: 1.5rem;
+    }
+
+    .box {
+      margin: 1.5rem 0rem;
+
+      .dx-field-value.dx-show-invalid-badge.dx-textbox.dx-texteditor.dx-show-clear-button.dx-editor-outlined.dx-widget.dx-texteditor-with-label {
+        margin-bottom: 30px;
+      }
+
+      .dx-field-value.dx-show-invalid-badge.dx-textbox.dx-texteditor.dx-show-clear-button.dx-editor-outlined.dx-texteditor-empty.dx-widget.dx-texteditor-with-label {
+        margin-bottom: 30px;
+      }
+
+      &.error {
+        .dx-textbox.dx-texteditor.dx-editor-outlined {
+          border: 1px solid #f00;
+          box-shadow: none !important;
+        }
+      }
+
+      .dx-button {
+        img {
+          height: 1rem;
+          width: 1rem;
+          background-color: none;
+        }
+      }
+    }
+    .remember-me {
+      margin-top: 20px;
+      .dx-checkbox-icon {
+        border-color: #525252;
+      }
+      .dx-checkbox-text {
+        margin-left: 8px;
+        color: var(--text-colour-body-525252, #525252);
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 21px;
+      }
+      .dx-widget.dx-checkbox.dx-checkbox-has-text {
+        margin-top: 30px;
+      }
+    }
+    .btn-section {
+      margin-top: 50px;
+    }
   }
 }
